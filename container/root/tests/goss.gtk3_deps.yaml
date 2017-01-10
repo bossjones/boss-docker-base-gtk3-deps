@@ -1,0 +1,130 @@
+command:
+  python3 --version:
+    exit-status: 0
+    stderr: ['!/./']
+  pip3 --version:
+    exit-status: 0
+    stderr: ['!/./']
+  jhbuild list:
+    exit-status: 0
+    stderr: ['add use_local_modulesets = True']
+  jhbuild run python -c 'from gi.repository import Gst; print(Gst)':
+    exit-status: 0
+    stderr: ['add use_local_modulesets = True']
+  jhbuild run python -c 'import sys; print(sys.version_info[0])':
+    exit-status: 0
+    stderr: ['add use_local_modulesets = True']
+  jhbuild run python -c 'import sys; print(sys.version_info)':
+    exit-status: 0
+    stderr: ['add use_local_modulesets = True']
+  jhbuild run python -c 'import gi;from gi.repository import GObject;print(GObject.pygobject_version);':
+    exit-status: 0
+    stderr: ['add use_local_modulesets = True']
+  jhbuild run python -c "import gi;gi.require_version('Gst', '1.0');from gi.repository import Gst;print(Gst.version_string());":
+    exit-status: 0
+    stderr: ['add use_local_modulesets = True']
+user:
+  pi:
+    exists: true
+    uid: 999
+    gid: 999
+    groups:
+    - pi
+    home: /home/pi
+file:
+  /home/pi/gnome:
+    exists: true
+    mode: "0755"
+    owner: pi
+    group: pi
+    filetype: directory
+  /home/pi/jhbuild:
+    exists: true
+    mode: "0755"
+    owner: pi
+    group: pi
+    filetype: directory
+  /home/pi/gnome/pocketsphinx:
+    exists: true
+    mode: "0755"
+    owner: pi
+    group: pi
+    filetype: directory
+  /home/pi/gnome/sphinxbase:
+    exists: true
+    mode: "0755"
+    owner: pi
+    group: pi
+    filetype: directory
+  /home/pi/gnome/gst-plugins-espeak-0.4.0:
+    exists: true
+    mode: "0755"
+    owner: pi
+    group: pi
+    filetype: directory
+  /home/pi/gnome/gst-libav-1.8.2:
+    exists: true
+    mode: "0755"
+    owner: pi
+    group: pi
+    filetype: directory
+  /home/pi/gnome/gst-plugins-bad-1.8.2:
+    exists: true
+    mode: "0755"
+    owner: pi
+    group: pi
+    filetype: directory
+  /home/pi/gnome/gst-plugins-ugly-1.8.2:
+    exists: true
+    mode: "0755"
+    owner: pi
+    group: pi
+    filetype: directory
+  /home/pi/gnome/gst-plugins-good-1.8.2:
+    exists: true
+    mode: "0755"
+    owner: pi
+    group: pi
+    filetype: directory
+  /home/pi/gnome/gst-plugins-base-1.8.2:
+    exists: true
+    mode: "0755"
+    owner: pi
+    group: pi
+    filetype: directory
+  /home/pi/gnome/orc-0.4.25:
+    exists: true
+    mode: "0755"
+    owner: pi
+    group: pi
+    filetype: directory
+  /home/pi/gnome/gstreamer-1.8.2:
+    exists: true
+    mode: "0755"
+    owner: pi
+    group: pi
+    filetype: directory
+  /home/pi/gnome/pygobject:
+    exists: true
+    mode: "0755"
+    owner: pi
+    group: pi
+    filetype: directory
+  /home/pi/gnome/gobject-introspection:
+    exists: true
+    mode: "0755"
+    owner: pi
+    group: pi
+    filetype: directory
+  /home/pi/gnome/glib:
+    exists: true
+    mode: "0755"
+    owner: pi
+    group: pi
+    filetype: directory
+  /home/pi/gnome/gtk-doc:
+    exists: true
+    mode: "0755"
+    owner: pi
+    group: pi
+    filetype: directory
