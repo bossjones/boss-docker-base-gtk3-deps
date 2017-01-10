@@ -18,4 +18,4 @@ tag:
 push:
 	@echo Pushing bossjones/boss-docker-base-gtk3-deps:v1 to Docker Hub
 
-	docker push bossjones/boss-docker-base-gtk3-deps:v1
+	docker push docker.io/bossjones/boss-docker-base-gtk3-deps:v1
