@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# source: https://medium.com/@elle.florio/the-svn-dockerization-84032e11d88d
+
+# Ensures that a failure of sshd doesn't return with a 0, even if the right-hand side does
+set -o pipefail
+
+dbus-daemon --session --print-address=0 --print-pid=1 --fork 0>"$ADDRESS_FILE" 1>"$PID_FILE"
+
+export DBUS_SESSION_BUS_ADDRESS=$(cat "$ADDRESS_FILE")
+PID=$(cat "$PID_FILE")
+
+echo "export DBUS_SESSION_BUS_ADDRESS=$(cat "$ADDRESS_FILE")" > ~pi/.exports
+
+echo "D-Bus per-session daemon address is: $DBUS_SESSION_BUS_ADDRESS"
+
+
+sudo chown pi:pi -R /home/pi/dev

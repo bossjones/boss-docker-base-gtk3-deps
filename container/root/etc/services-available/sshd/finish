@@ -1,0 +1,14 @@
+#!/command/execlineb -P
+
+# source: https://github.com/jdeblese/s6-services/blob/68cdba1e8606e3df58acff7fad48c42491cd6dd5/sshd/finish
+# Do not execute a killall sshd here, as we may still need active
+# ssh sessions, for instance when restarting sshd remotely
+
+rm -f /var/run/sshd.pid
+
+# FIXME: We might need this?
+# "Bring down service only when it crashes"
+# !/usr/bin/execlineb -S1
+# if { s6-test ${1} -ne 0 }
+# if { s6-test ${1} -ne 256 }
+# s6-svscanctl -t /var/run/s6/services

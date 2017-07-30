@@ -1,0 +1,24 @@
+*.term
+sshd_log.txt
+.DS_Store
+.travis.yml
+.git
+.gitignore
+LICENSE
+README.md
+contributing.md
+
+# ruby
+.bundle/
+.vendor/
+
+# arbirtary files
+env.log
+env_to_change
+env_to_change_envvar
+temp
+
+
+# TEMPORARY, we'll remove this after we get docker volumes and quick rebuilding working
+*execline-shell
+*execline-startup

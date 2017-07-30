@@ -1,0 +1,276 @@
+#!/usr/bin/env bash
+
+# source: https://github.com/sid137/ansible/blob/master/files/aliases.sh
+
+alias sshn='ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
+alias gip='pbpaste | gist -p'
+
+# node.js
+alias ni='npm install'
+
+# shell
+# http://majewsky.wordpress.com/2009/07/11/shutdown-your-machine-automatically-or-from-remote/
+alias k9='kill -9'
+alias gi='gem install'
+
+alias lsdot="ls -A --group-directories-first | egrep '^\.'"
+alias fs='find *'
+alias spp='copy_public_ssh_key_to_host'
+alias sdpi='sudo dpkg --install'
+
+alias v='vim'
+alias svim='sudo vim'
+alias gu='chmod u+x'
+alias tz='tar -zxvf'
+alias tj='tar -xjvf'
+
+#python
+alias ipy="ipython"
+
+#git
+alias be='bundle exec'
+alias gcl='git clone'
+alias gpr='git pull --rebase'
+
+alias __git_find_subcommand='__git_find_on_cmdline'
+alias g='git'
+alias ga='git add'
+alias gall='git add .'
+alias gb='git branch'
+alias gba='git branch -a'
+alias gc='git commit -v'
+alias gca='git commit -v -a'
+alias gci='git commit --interactive'
+alias gcl='git clone'
+alias gcm='git commit -v -m'
+alias gco='git checkout'
+alias gcount='git shortlog -sn'
+alias gcp='git cherry-pick'
+alias gd='git diff | /usr/local/bin/mvim -f'
+alias gdel='git branch -D'
+alias gdv='git diff -w "$@" | vim -R -'
+alias get='git'
+alias gexport='git archive --format zip --output'
+alias gg='git log --graph --pretty=format:'\''%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset'\'' --abbrev-commit --date=relative'
+alias gl='git pull'
+alias gll='git log --graph --pretty=oneline --abbrev-commit'
+alias gm='git merge'
+alias gmu='git fetch origin -v; git fetch upstream -v; git merge upstream/master'
+alias gp='git push'
+alias gpo='git push origin'
+alias gpp='git pull && git push'
+alias gpr='git pull --rebase'
+alias gs='git status'
+alias gsl='git shortlog -sn'
+alias gss='git status -s'
+alias gst='git status'
+alias gup='git fetch && git rebase'
+alias gus='git reset HEAD'
+alias gw='git whatchanged'
+
+# Make
+alias mk="make"
+alias mkc="make clean"
+alias mka="make all"
+alias mkd='make d'
+alias mkp='make python'
+alias mkt='make test'
+alias mkx='make && make clean'
+alias mkf='make clean && make && make hex && make writeflash'
+
+alias pd="cd ~/dev/${CURR_PROJ}"
+alias ds='cd ~/Desktop'
+alias m='more'
+alias l='ls -lau -G'
+alias sapt='aptitude search'
+alias agi='sudo aptitude install -y'
+alias ragi='sudo aptitude remove --purge'
+alias vi='vim'
+alias sagu='sudo apt-get update'
+alias rii='ri -Tf ansi'
+
+# Rake Tasks
+alias rk='bundle exec rake'
+
+# Scarlett tasks
+# NOTE: These aliases are for easy debugging of things the usually go wrong w/ scarlett
+alias scarlett_listen='cd ~/dev/bossjones-github/scarlett-dbus-poc/ && workon scarlett-dbus-poc && python scarlett_listener.py'
+alias scarlett_task='cd ~/dev/bossjones-github/scarlett-dbus-poc/ && workon scarlett-dbus-poc && python scarlett_tasker.py'
+alias scarlett_debug_listener='cd ~/dev/bossjones-github/scarlett-dbus-poc/ && workon scarlett-dbus-poc && GST_DEBUG=3,python:5,gnl*:5 python scarlett_listener.py 2>&1 | tee listener.log'
+alias scarlett_dbus_cd='cd ~/dev/bossjones-github/scarlett-dbus-poc/'
+
+alias scarlett_check_alsa='alsamixer'
+alias scarlett_reinstall_pulse='sudo apt-get remove --purge alsa-base pulseaudio -y ;sudo apt-get install alsa-base pulseaudio -y;sudo alsa force-reload;sudo shutdown -r now'
+alias scarlett_force_reload_alsa='sudo alsa force-reload;sudo shutdown -r now'
+alias scarlett_clear_pulse_cache='rm -r ~pi/.pulse;rm -r ~pi/.pulse-cookie;rm -r /tmp/pulse-*;rm -r ~pi/.config/pulse;killall -9 pulseaudio;'
+alias scarlett_list_usb_devices='lsusb'
+alias scarlett_list_microphones='arecord -l'
+alias scarlett_microphone_record_test='arecord -D plughw:1,0 /tmp/scarlett_microphone_test.wav'
+alias scarlett_microphone_play_test='aplay /tmp/scarlett_microphone_test.wav'
+alias scarlett_get_recording_settings="amixer -c 0 sget 'Mic',0"
+alias scarlett_get_playback_settings="amixer -c 1"
+alias scarlett_increase_capture_levels='alsamixer -c 0'
+alias scarlett_microphone_record_test2='arecord -D plughw:0,0 -f cd /tmp/test.wav'
+alias scarlett_microphone_play_sound_test2='aplay /tmp/test.wav'
+alias scarlett_check_pocketsphinx_gst_plugin_exists='gst-inspect-1.0 | grep sphinx'
+alias scarlett_list_pulse_sources='pacmd list-sources'
+alias scarlett_microphone_check='alsamixer'
+alias scarlett_alsa_info='/tmp/alsa-info.sh'
+# alias scarlett_os_x_get_usb_devices='ioreg -p IOUSB -w0 -l'
+alias scarlett_change_default_pulse_sink_and_src='gstreamer-properties'
+alias scarlett_show_input_sources_pulse="pacmd list-sources | grep -e device.string -e 'name:'"
+alias scarlett_list_input_sources_pulse="pacmd list-sources | grep -e device.string -e 'name:'"
+alias scarlett_list_sinks_pulse="pacmd list-sinks | grep -e 'name:' -e 'index'"
+alias scarlett_list_output_sources_and_cards="aplay -l | grep card"
+alias scarlett_list_usb_sound_devices='cat /proc/asound/cards'
+alias scarlett_list_usb_sound_pcm='cat /proc/asound/pcm'
+alias scarlett_pulse_default_info='pactl info'
+alias scarlett_pulse_switch_device_gui='gnome-volume-control'
+alias scarlett_pulse_switch_device_gui2='gnome-control-center sound'
+alias scarlett_cd_demo='cd ~/dev/bossjones-github/scarlett-gstreamer-pocketsphinx-demo/'
+alias scarlett_pulse_prefrences='paprefs'
+
+# list all soundcards and digital audio devices
+alias scarlett_list_alsa_playback_hardware_devices='aplay -l'
+
+# list device names, pcms
+alias scarlett_list_alsa_playback_hardware_devices='aplay -L'
+
+alias scarlett_test_pulseaudio_record='parecord -d input outfile2.wav'
+alias scarlett_list_pulse_short_names='pactl list short'
+alias scarlett_list_pulse_short_sinks='pactl list short sinks'
+# use this to see if usb mic is enabled
+alias scarlett_check_pulse_module_enabled='pactl list short modules'
+
+# card name
+# alsa_card.usb-C-Media_Electronics_Inc._USB_PnP_Sound_Device-00-Device
+
+#26  module-alsa-card  device_id="1" name="usb-C-Media_Electronics_Inc._USB_PnP_Sound_Device-00-Device" card_name="alsa_card.usb-C-Media_Electronics_Inc._USB_PnP_Sound_Device-00-Device" namereg_fail=false tsched=yes fixed_latency_range=no ignore_dB=no deferred_volume=yes use_ucm=yes card_properties="module-udev-detect.discovered=1"
+
+# source: https://askubuntu.com/questions/410737/record-desktop-and-microphone-audio-with-avconv/552344
+# pactl [command] [module] [option] [audio output sink eg speakers] [input audio index eg. run pactl list short modules]
+# pactl load-module module-loopback latency_msec=1 sink=alsa_output.pci-0000_00_05.0.analog-stereo 26
+# pactl unload-module 26
+
+# pactl load-module module-loopback latency_msec=1 sinkalsa_card.usb-C-Media_Electronics_Inc._USB_PnP_Sound_Device-00-Device
+# record at 16khz according to http://sourceforge.net/p/cmusphinx/discussion/help/thread/24e0e28c/?limit=25
+# parecord --no-remix --no-remap --device="alsa_output.pci-0000_00_05.0.analog-stereo" --rate 16000 --file-format=wav outfile.wav
+
+# pacmd load-module module-alsa-source device=alsa_card.usb-C-Media_Electronics_Inc._USB_PnP_Sound_Device-00-Device
+# parec --device=alsa_card.usb-C-Media_Electronics_Inc._USB_PnP_Sound_Device-00-Device --format=s16le --rate=16000 --channels=2 | sox --type raw -e signed-integer --rate 44100 --channels 2 - --type wav outfile.wav
+# parecord -d alsa_card.usb-C-Media_Electronics_Inc._USB_PnP_Sound_Device-00-Device outfile.wav
+
+alias scarlett_check_pulse_default_source='pactl stat| grep -i Source'
+
+
+# ± |master U:3 ?:3 ✗| → pactl info
+# Server String: /run/user/1000/pulse/native
+# Library Protocol Version: 28
+# Server Protocol Version: 28
+# Is Local: yes
+# Client Index: 39
+# Tile Size: 65472
+# User Name: pi
+# Host Name: scarlett-ansible
+# Server Name: pulseaudio
+# Server Version: 4.0
+# Default Sample Specification: s16le 2ch 44100Hz
+# Default Channel Map: front-left,front-right
+# Default Sink: alsa_output.pci-0000_00_05.0.analog-stereo
+# Default Source: alsa_input.pci-0000_00_05.0.analog-stereo
+# Cookie: 15e8:5971
+
+# list all soundcards and digital audio devices
+alias scarlett_list_all_sound_cards='arecord --list-pcms'
+alias scarlett_test_pocketsphinx='pocketsphinx_continuous -hmm /home/pi/.virtualenvs/scarlett-dbus-poc/share/pocketsphinx/model/en-us/en-us -lm 1473.lm -dict 1473.dic -samprate 16000/8000/48000 -inmic yes'
+# when we get it working add this:
+# -silprob 0.1 -wip 1e-4 -bestpath 0
+
+alias scarlett_test_pocketsphinx_example='pocketsphinx_continuous -inmic yes -hmm /home/pi/dev/bossjones-github/scarlett-dbus-poc/pocketsphinx/model/en-us/en-us -lm /home/pi/dev/bossjones-github/scarlett-dbus-poc/pocketsphinx/model/en-us/en-us.lm.bin -dict /home/pi/dev/bossjones-github/scarlett-dbus-poc/pocketsphinx/model/en-us/cmudict-en-us.dict'
+#####################################################################################################################################
+# # source: https://wiki.archlinux.org/index.php/PulseAudio/Examples
+# # Set ALSA as USB_PnP_Sound_Device
+#####################################################################################################################################
+# pacmd load-module module-alsa-source source_name=alsa_input.usb-C-Media_Electronics_Inc._USB_PnP_Sound_Device-00-Device.analog-mono device=hw:1
+# # Make it ALSA default
+# pacmd set-default-source alsa_input.usb-C-Media_Electronics_Inc._USB_PnP_Sound_Device-00-Device.analog-mono
+#####################################################################################################################################
+
+test_pulseaudio_command_line(){
+  pacmd "load-module module-alsa-source source_name=input device=hw:1"
+  pacmd "set-default-source input"
+}
+
+scarlett_gst_launch_test(){
+  gst-launch-1.0 -m alsasrc device=plughw:CARD=Device,DEV=0 ! \
+    queue silent=false leaky=2 max-size-buffers=0 max-size-time=0 max-size-bytes=0 ! \
+    audioconvert ! \
+    audioresample ! \
+    "audio/x-raw,format=S16LE,channels=1,layout=interleaved" ! \
+    pocketsphinx name=asr \
+    bestpath=0 \
+    hmm=/home/pi/.virtualenvs/scarlett-dbus-poc/share/pocketsphinx/model/en-us/en-us \
+    lm=~/dev/bossjones-github/scarlett-gstreamer-pocketsphinx-demo/1473.lm \
+    dict=~/dev/bossjones-github/scarlett-gstreamer-pocketsphinx-demo/1473.dic ! \
+    queue leaky=2 ! \
+    fakesink
+}
+
+# source: http://trac.gateworks.com/wiki/Yocto/gstreamer/audio
+alias scarlett_list_devices_to_record_with='arecord -L'
+alias scarlett_gst_hear_yourself='gst-launch-1.0 alsasrc device=plughw:CARD=Device,DEV=0 ! audioconvert ! audioresample ! pulsesink'
+# clean playback
+alias scarlett_gst_hear_yourself_queue='gst-launch-1.0 --gst-debug=3 alsasrc device=plughw:CARD=Device,DEV=0 ! audioresample ! audioconvert ! audioresample !  queue silent=false leaky=2 max-size-buffers=0 max-size-time=0 max-size-bytes=0 ! pulsesink'
+
+# BOSSJONES NOTE:
+# works but slow, getting error:
+# gstaudiobasesrc.c(863): gst_audio_base_src_create (): /GstPipeline:pipeline0/GstAlsaSrc:alsasrc0: Dropped 8820 samples. This is most likely because downstream can't keep up and is consuming samples too slowly.
+# gst-launch-1.0 alsasrc device=hw:1 ! audioconvert ! audioresample ! pocketsphinx name=asr hmm=/home/pi/.virtualenvs/scarlett-dbus-poc/share/pocketsphinx/model/en-us/en-us lm=1473.lm dict=1473.dic ! fakesink
+
+# another attempt
+#gst-launch-1.0 alsasrc device=plughw:CARD=Device,DEV=0 ! queue silent=false leaky=2 max-size-buffers=0 max-size-time=0 max-size-bytes=0 ! audioconvert ! audioresample ! audio/x-raw-int, rate=16000, width=16, depth=16, channels=1 ! audioresample ! audio/x-raw-int, rate=8000 ! pocketsphinx name=asr hmm=/home/pi/.virtualenvs/scarlett-dbus-poc/share/pocketsphinx/model/en-us/en-us lm=1473.lm dict=1473.dic ! fakesink
+
+#gst-launch-1.0 --gst-debug=3 alsasrc device=plughw:CARD=Device,DEV=0 ! audioresample ! queue silent=false leaky=2 max-size-buffers=0 max-size-time=0 max-size-bytes=0 ! audioconvert ! audioresample ! pocketsphinx name=asr hmm=/home/pi/.virtualenvs/scarlett-dbus-poc/share/pocketsphinx/model/en-us/en-us lm=1473.lm dict=1473.dic ! fakesink
+
+#WARNING: erroneous pipeline: could not link audioresample0 to audioresample1
+
+# if use_legacy_parse_launch:
+#     parse_launch_array = ['alsasrc device=' +
+#            ps_device,
+#            'queue silent=false leaky=2 max-size-buffers=0 max-size-time=0 max-size-bytes=0',  # noqa
+#            'audioconvert',
+#            'audioresample',
+#            'audio/x-raw-int, rate=16000, width=16, depth=16, channels=1',
+#            'audioresample',
+#            'audio/x-raw-int, rate=8000',
+#            'pocketsphinx name=asr',
+#            'fakesink dump=1']
+
+# pocketsphinx_continuous -lm 1473.lm -dict 1473.dic -keyphrase "OKAY PI" -kws_threshold 1e-20 -inmic yes
+
+# pocketsphinx_continuous -lm 1473.lm -dict 1473.dic -keyphrase "SCARLETT" -kws_threshold 1e-20 -inmic yes -verbose yes -adcdev plughw:CARD=Device,DEV=0
+
+# hmm=/home/pi/.virtualenvs/scarlett-dbus-poc/share/pocketsphinx/model/en-us/en-us lm=1473.lm dict=1473.dic
+# -samprate 16000/8000/48000 -inmic yes
+
+scarlett_setup_env_vars(){
+  export GSTREAMER=1.0
+  export PI_HOME=/home/pi
+  export MAIN_DIR=$PI_HOME/dev/bossjones-github/scarlett-dbus-poc
+  export VIRT_ROOT=$PI_HOME/.virtualenvs/scarlett-dbus-poc
+  export PKG_CONFIG_PATH=$VIRT_ROOT/lib/pkgconfig
+  export SCARLETT_CONFIG=$PI_HOME/.scarlett
+  export SCARLETT_HMM=$MAIN_DIR/tests/fixtures/model/hmm/en_US/hub4wsj_sc_8k
+  export SCARLETT_LM=$MAIN_DIR/tests/fixtures/lm/1602.lm
+  export SCARLETT_DICT=$MAIN_DIR/tests/fixtures/dict/1602.dic
+
+  # for GST PLUGINS
+  export LD_LIBRARY_PATH=$VIRT_ROOT/lib
+  export GST_PLUGIN_PATH=$VIRT_ROOT/lib/gstreamer-$GSTREAMER
+}
+
+scarlett_gconftool(){
+  gconftool-2 -t string --set /system/gstreamer/1.0/default/audiosink pulsesink
+  gconftool-2 -t string --set /system/gstreamer/1.0/default/audiosrc pulsesrc
+  gconftool-2 -t string --set /system/gstreamer/1.0/default/musicaudiosink pulsesink
+}

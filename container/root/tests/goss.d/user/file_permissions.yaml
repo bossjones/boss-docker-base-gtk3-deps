@@ -1,0 +1,43 @@
+---
+# verify all of these folders work based on the write_xdg_dir_init script
+file:
+  /home/pi/.cache:
+    exists: true
+    mode: "0755"
+    size: 4096
+    owner: pi
+    group: pi
+    filetype: directory
+    contains: []
+  /home/pi/.config:
+    exists: true
+    mode: "0755"
+    size: 4096
+    owner: pi
+    group: pi
+    filetype: directory
+    contains: []
+  /home/pi/.local/share:
+    exists: true
+    mode: "0755"
+    size: 4096
+    owner: pi
+    group: pi
+    filetype: directory
+    contains: []
+  /run/user/1000:
+    exists: true
+    mode: "0700"
+    size: 4096
+    owner: pi
+    group: pi
+    filetype: directory
+    contains: []
+  /run/user/1000/env:
+    exists: true
+    mode: "0755"
+    size: 4096
+    owner: pi
+    group: pi
+    filetype: directory
+    contains: []

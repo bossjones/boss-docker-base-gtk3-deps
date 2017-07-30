@@ -1,0 +1,21 @@
+#!/usr/bin/execlineb -S0
+
+# 2nd: This get run 2nd
+
+# original source: https://github.com/skarnet/lh-bootstrap/blob/master/layout/rootfs/etc/execline-shell
+
+backtick -n defaulthome
+{
+  if -nt
+  {
+    backtick -n defaultuser { id -un }
+    importas -u defaultuser defaultuser
+    importas -D $defaultuser USER USER
+    redirfd -w 2 /dev/null
+    homeof ${USER}
+  }
+  s6-echo /
+}
+importas -u defaulthome defaulthome
+importas -D $defaulthome HOME HOME
+${HOME}/.execline-shell $@

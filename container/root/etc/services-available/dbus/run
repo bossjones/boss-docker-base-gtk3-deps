@@ -1,0 +1,109 @@
+#!/usr/bin/execlineb -P
+#
+# messagebus:   The D-BUS systemwide message bus
+#
+# description:  This is a daemon which broadcasts notifications of system events \
+#               and other messages. See http://www.freedesktop.org/software/dbus
+#
+# processname: dbus-daemon
+# pidfile: /tmp/pydbustest.XXXXXXXXX
+# Modified further for s6
+
+# # FIXME: DISABLED FROM HERE ...
+# # NOTE: Get container environment
+# with-contenv
+
+# # NOTE: trap program
+# # -x : forward signals. If this option is given, any signal that trap receives and that is not explicitly trapped will be sent to prog. By default, trap does not forward any signals, and does not ignore them either - for instance a SIGTERM, unless caught by a SIGTERM directive, will kill the trap process (and leave prog running). With the -x option, without a SIGTERM directive, a SIGTERM will be still be caught by trap, that will send it to prog.
+# trap -x
+# {
+#   term
+#   {
+#     foreground
+#     {
+
+#       # find location of PID_FILE
+#       backtick PID_FILE { find /tmp -name 'pydbustest_pid_file*' -print }
+#       importas PID_FILE !
+
+#       # find PID number
+#       backtick PID { cat ${PID} }
+#       importas PID !
+
+#       # kill process
+#       kill -TERM $PID
+#     }
+#     echo [sigterm-dbus-daemon] graceful shutdown complete
+#   }
+# }
+# s6-setuidgid pi ./.dbus_command
+# # FIXME: DISABLED TO HERE ...
+
+# /bin/bash -C '/tmp/jhbuild_setup.sh'
+
+# s6-applyuidgid -u 1000 -g 1000 dbus-daemon --session --print-address=0 --print-pid=1 --fork 0>"$ADDRESS_FILE" 1>"$PID_FILE"
+
+
+# NOTE: Echo status, then dump env program to stdout
+# foreground { s6-echo " [run] starting /usr/bin/dbus-daemon --session --print-address=0 --print-pid=1 --fork 0" }
+
+# NOTE: s6-envuidgid program
+# s6-envuidgid potentially sets the UID,
+# GID and GIDLIST environment variables according to
+# the options and arguments it is given; then it executes into another program.
+# s6-envuidgid [ -u | -g | -B ] [ -n ] [ -i | -D uid:gid:gidlist ] account prog...
+# NOTE: set UID and GID env vars to pi
+# foreground { s6-envuidgid pi who }
+
+# NOTE: backtick program
+# backtick runs a program and stores its output in an environment variable, then executes another program.
+# backtick [ -i | -I | -D default ] [ -n ] variable { prog1... } prog2...
+# -n : chomp an ending newline off prog1...'s output.
+# -i : backtick exits 1.
+# -I : variable is removed from the environment, and execution proceeds.
+# -D default : the value of variable is set to default, and execution proceeds.
+# neither of those options: the value of variable is set to whatever the start of prog1...'s output is, up to the first null character, or to whatever prog1... wrote before crashing; then execution proceeds.
+# ADDRESS_FILE=$(mktemp /tmp/pydbustest.XXXXXXXXX)
+# PID_FILE=$(mktemp /tmp/pydbustest.XXXXXXXXX)
+# foreground {
+#   backtick ADDRESS_FILE { mktemp /tmp/pydbustest_address.XXXXXXXXX }
+#   importas ADDRESS_FILE !
+
+#   backtick PID_FILE { mktemp /tmp/pydbustest_pid_file.XXXXXXXXX }
+#   importas PID_FILE !
+
+#   foreground { s6-echo " [run] ADDRESS_FILE:${ADDRESS_FILE}" }
+#   foreground { s6-echo " [run] PID_FILE:${PID_FILE}" }
+# }
+
+# NOTE: fdmove program
+# fdmove moves or copies a given file descriptor, then executes a program.
+# fdmove [ -c ] fdto fdfrom prog...
+# fdmove moves the file descriptor number fdfrom, to number fdto, then execs into prog with its arguments. If fdto is open, fdmove closes it before moving fdfrom to it.
+# -c : duplicate fdfrom to fdto instead of moving it; do not close fdfrom.
+# fdmove -c a b prog... is roughly equivalent to sh -c 'exec prog... a>&b'
+# fdmove a b prog... is roughly equivalent to sh -c 'exec prog... a>&b b<&-'
+
+
+########################################################################
+# ADDRESS_FILE=$(mktemp /tmp/pydbustest.XXXXXXXXX)
+# PID_FILE=$(mktemp /tmp/pydbustest.XXXXXXXXX)
+
+# dbus-daemon --session --print-address=0 --print-pid=1 --fork 0>"$ADDRESS_FILE" 1>"$PID_FILE"
+
+# export DBUS_SESSION_BUS_ADDRESS=$(cat "$ADDRESS_FILE")
+# PID=$(cat "$PID_FILE")
+
+# echo "export DBUS_SESSION_BUS_ADDRESS=$(cat "$ADDRESS_FILE")" > ~pi/.exports
+
+# echo "D-Bus per-session daemon address is: $DBUS_SESSION_BUS_ADDRESS"
+
+# trap 'kill -TERM $PID' EXIT
+
+# rm "$ADDRESS_FILE" "$PID_FILE"
+
+# sudo find \( -name __pycache__ -o -name '*.pyc' \) | sudo xargs rm -rf
+# sudo chown pi:pi -R /home/pi/dev
+
+# exec "$@"
+########################################################################

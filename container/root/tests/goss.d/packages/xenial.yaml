@@ -1,0 +1,59 @@
+---
+package:
+  dbus:
+    installed: true
+  less:
+    installed: true
+  ########################################
+  # build-essentials
+  ########################################
+  autoconf:
+    installed: true
+  bison:
+    installed: true
+  build-essential:
+    installed: true
+  flex:
+    installed: true
+  gettext:
+    installed: true
+  libncurses5-dev:
+    installed: true
+  automake:
+    installed: true
+  bison:
+    installed: true
+  libtool:
+    installed: true
+  pkg-config:
+    installed: true
+  autopoint:
+    installed: true
+  autotools-dev:
+    installed: true
+  itstool:
+    installed: true
+  yasm:
+    installed: true
+  flex:
+    installed: true
+  bison:
+    installed: true
+  g++:
+    installed: true
+  autopoint:
+    installed: true
+  dh-autoreconf:
+    installed: true
+  libssl-dev:
+    installed: true
+  libreadline-dev:
+    installed: true
+  wget:
+    installed: true
+  curl:
+    installed: true
+  openssl:
+    installed: true
+  perl:
+    installed: true

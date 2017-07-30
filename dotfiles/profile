@@ -1,0 +1,14 @@
+# .profile: POSIX-compatible shell login script
+
+# source: https://github.com/smaeul/dotfiles/blob/master/profile
+
+# Set default values for required environment variables
+LOGNAME=${LOGNAME:-${USER}}
+LOGNAME=${LOGNAME:-$(id -un)}
+PATH=${PATH:-/usr/local/bin:/usr/local/sbin:/bin:/sbin:/usr/bin:/usr/sbin}
+SHELL=${SHELL:-$(getent passwd  "$LOGNAME" | cut -d: -f7)}
+XDG_RUNTIME_DIR=${XDG_RUNTIME_DIR:-/run/user/$(cat /etc/passwd | grep "^${LOGNAME}" | cut -d ":" -f3)}
+
+# Execute a non-login shell with the appropriate environment
+test -d "$XDG_RUNTIME_DIR"/env || "$HOME"/.local/bin/env-setup
+exec s6-envdir "$XDG_RUNTIME_DIR"/env exec -a "${SHELL##*/}" "$SHELL"

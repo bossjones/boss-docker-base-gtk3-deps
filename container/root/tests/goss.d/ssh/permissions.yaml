@@ -1,0 +1,23 @@
+---
+file:
+  /home/pi/.ssh:
+    exists: true
+    mode: "0700"
+    owner: pi
+    group: pi
+    filetype: directory
+    contains: []
+  /home/pi/.ssh/authorized_keys:
+    exists: true
+    mode: "0644"
+    owner: pi
+    group: pi
+    filetype: file
+    contains: []
+  /home/pi/.ssh/config:
+    exists: true
+    mode: "0644"
+    owner: pi
+    group: pi
+    filetype: file
+    contains: []

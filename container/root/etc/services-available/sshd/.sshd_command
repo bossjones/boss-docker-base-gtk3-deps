@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# source: https://medium.com/@elle.florio/the-svn-dockerization-84032e11d88d
+
+# Ensures that a failure of sshd doesn't return with a 0, even if the right-hand side does
+set -o pipefail
+
+# exec php-fpm -F -O 2>&1 | sed -u 's,.*: \"\(.*\)$,\1,'| sed -u 's,\"$,,'
+exec /usr/sbin/sshd -D -e 2>&1

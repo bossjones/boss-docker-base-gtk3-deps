@@ -1,0 +1,58 @@
+#!/usr/bin/execlineb -P
+
+##################################################################################
+# NOTE: The -P option will bypass positional parameter handling completely:
+# the environment will not be pushed, and positional parameters will be ignored.
+# execlineb -P -c "script" is equivalent to, but more efficient than,
+# execlineb -c "emptyenv -P script".
+# You should use the -P option only in standalone scripts that take no arguments,
+# such as s6's or runit's run scripts.
+##################################################################################
+
+# foreground { s6-mkdir -p -m 750 /var/run/sshd }
+# fdmove -c 2 1
+# if { /usr/sbin/sshd -t }
+# /usr/sbin/sshd -D -e
+
+# FIXME: DO WE NEED THIS?
+# source: https://github.com/jdeblese/s6-services/blob/68cdba1e8606e3df58acff7fad48c42491cd6dd5/sshd/run
+# fdmove -c 2 1
+#
+# multisubstitute {
+#   define CMD /usr/sbin/sshd
+#   define CONFIG /etc/ssh
+#   define KEYGEN /usr/bin/ssh-keygen
+# }
+#
+# foreground {
+#   if { test ! -r ${CONFIG}/ssh_host_key }
+#     ${KEYGEN} -t rsa1 -f ${CONFIG}/ssh_host_key -N ""
+# }
+#
+# foreground {
+#   if { test ! -f ${CONFIG}/ssh_host_dsa_key }
+#     ${KEYGEN} -t dsa -f ${CONFIG}/ssh_host_dsa_key -N ""
+# }
+#
+# foreground {
+#   if { test ! -f ${CONFIG}/ssh_host_rsa_key }
+#     ${KEYGEN} -t rsa -f ${CONFIG}/ssh_host_rsa_key -N ""
+# }
+#
+# foreground {
+#   if { test ! -f ${CONFIG}/ssh_host_ecdsa_key }
+#     ${KEYGEN} -t ecdsa -f ${CONFIG}/ssh_host_ecdsa_key -N ""
+# }
+#
+# ${CMD} -D -e
+
+# SSHD needs to have stdout/stderr filtered for the extra "cruft" it appends.
+# Due to the complexity of this script (it didn't work with S6's pipeline), it is now moved to its own separate script
+# with-contenv ./.sshd_command
+# exec /usr/sbin/sshd -D -e 2>&1
+# export LC_CTYPE=en_US.UTF-8
+# exec /usr/sbin/sshd -D -e
+
+foreground { s6-echo " [run] starting /usr/sbin/sshd -D -f /etc/ssh/sshd_config" }
+
+/usr/sbin/sshd -D -f /etc/ssh/sshd_config
