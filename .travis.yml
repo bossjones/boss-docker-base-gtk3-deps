@@ -45,7 +45,7 @@ install:
   # - 'sed -i "/dockerfile: Dockerfile/a \ \ \ \ privileged: true" docker-compose.test.yml'
   - 'sed -i "/base_gtk3_deps:/a \ \ \ \ privileged: true" docker-compose.test.yml'
   - cat docker-compose.test.yml
-  - travis_retry docker-compose -f docker-compose.test.yml -f ci/build.yml build
+  - travis_retry docker-compose -f docker-compose.test.yml -f ci_build.yml build
 
 
 script:
