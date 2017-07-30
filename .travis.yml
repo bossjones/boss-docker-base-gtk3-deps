@@ -40,13 +40,8 @@ cache:
 install:
   - travis_retry docker-compose pull
   # NOTE: set containers as privileged to bypass Travis environment limitations
-  # - 'sed -i "/build: ./a \ \ privileged: true" docker-compose.yml'
-  # NOTE: When we move to docker-compose v2+ uncomment this below
-  # - 'sed -i "/dockerfile: Dockerfile/a \ \ \ \ privileged: true" docker-compose.test.yml'
   - 'sed -i "/base_gtk3_deps:/a \ \ \ \ privileged: true" docker-compose.test.yml'
   - cat docker-compose.test.yml
-  - travis_retry docker-compose -f docker-compose.test.yml -f ci_build.yml build
-
 
 script:
   - travis_retry docker-compose -f docker-compose.test.yml -f ci_build.yml up --build
