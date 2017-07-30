@@ -628,6 +628,8 @@ RUN \
     && touch /home/pi/.bash_history \
     && chown pi:pi /home/pi/.bash_history \
     && chmod 0600 /home/pi/.bash_history \
+    && mkdir -p /home/pi/.cache \
+    && chown pi:pi -R /home/pi/.cache \
     && chmod 0755 /home/pi/.cache
 
 # NOTE: Temp run install as pi user
