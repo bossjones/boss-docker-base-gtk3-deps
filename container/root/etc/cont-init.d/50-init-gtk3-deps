@@ -118,8 +118,8 @@ foreground {
             cd /tests
             /usr/local/bin/goss -g ./goss.gtk3_deps.yaml validate --retry-timeout 30s --sleep 1s
         }
-        # NOTE: UNCOMMENT THIS LINE IF YOU NEED TO TEST THIS LOGIC WITHOUT RUNNING TESTS # foreground { s6-echo " [run] pretend we just ran s6-applyuidgid -u 1000 -g 1000 /usr/local/bin/goss -g /tests/goss.jhbuild.yaml validate --retry-timeout 30s --sleep 1s" }
-        # foreground { s6-echo " [run] pretend we just ran s6-applyuidgid -u 1000 -g 1000 /usr/local/bin/goss -g /tests/goss.jhbuild.yaml validate --retry-timeout 30s --sleep 1s" }
+        # NOTE: UNCOMMENT THIS LINE IF YOU NEED TO TEST THIS LOGIC WITHOUT RUNNING TESTS # foreground { s6-echo " [run] pretend we just ran s6-applyuidgid -u 1000 -g 1000 /usr/local/bin/goss -g /tests/goss.gtk3_deps.yaml validate --retry-timeout 30s --sleep 1s" }
+        # foreground { s6-echo " [run] pretend we just ran s6-applyuidgid -u 1000 -g 1000 /usr/local/bin/goss -g /tests/goss.gtk3_deps.yaml validate --retry-timeout 30s --sleep 1s" }
         # NOTE: importas program
         # importas [ -i | -D default ] [ -u ] [ -s ] [ -C | -c ] [ -n ] [ -d delim ] variable envvar prog...
         # D default : If this option is given and envvar is undefined, substitute default for the value of variable instead of no word. For instance, to substitute the empty word, use -D "".

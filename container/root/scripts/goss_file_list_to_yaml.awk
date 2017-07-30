@@ -43,7 +43,7 @@ END {
 # /tests/goss.d/services/dbus.yaml
 # /tests/goss.d/packages/xenial.yaml
 # /tests/goss.python3.yaml
-# /tests/goss.jhbuild.yaml
+# /tests/goss.gtk3_deps.yaml
 
 
 # ORIG
