@@ -1,0 +1,30 @@
+#!/usr/bin/env python3
+#
+# Copyright © 2016 Samuel Holland <samuel@sholland.org>
+# See LICENSE in the project directory for license terms.
+# vim: expandtab:sts=4:sw=4:ts=8:tw=100
+#
+
+# source: https://github.com/smaeul/dotfiles/blob/master/local/bin/dotfiles
+
+import os, subprocess
+
+dotfiles = os.getenv('XDG_CONFIG_HOME') + '/dotfiles'
+home = os.getenv('HOME')
+find = subprocess.Popen(['find', dotfiles, '-type', 'd', '-name', '.git',
+    '-prune', '-or', '-type', 'f', '-print'], stdout=subprocess.PIPE)
+
+for line in find.stdout:
+    destination = line.decode('utf-8')[:-1]
+    link = destination.replace(dotfiles + '/', home + '/.')
+    linkdir = os.path.dirname(link)
+    relative = os.path.relpath(destination, linkdir)
+    if not os.path.exists(linkdir):
+        print("creating directories " + linkdir)
+        os.makedirs(linkdir)
+    if os.path.lexists(link) and os.readlink(link) != relative:
+        print("removing old symlink: " + link)
+        os.unlink(link)
+    if not os.path.lexists(link):
+        print("creating link: " + link)
+        os.symlink(relative, link)
