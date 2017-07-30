@@ -1,19 +1,19 @@
 version: "2"
 
 services:
-  base_gtk3_deps:
+  base_gtk3_deps_dev:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
       args:
         SCARLETT_ENABLE_SSHD: 0
         SCARLETT_ENABLE_DBUS: 'true'
         SCARLETT_BUILD_GNOME: 'true'
-        TRAVIS_CI: 'true'
+        TRAVIS_CI: 'false'
     environment:
       SERVER_LOG_MINIMAL: 1
-      SERVER_APP_NAME: base-gtk3-deps
-      COMPOSE_PROJECT_NAME: base-gtk3-deps
+      SERVER_APP_NAME: base-gtk3-deps-dev
+      COMPOSE_PROJECT_NAME: base-gtk3-deps-dev
       S6_KILL_FINISH_MAXTIME: 1
       S6_KILL_GRACETIME: 1
       SERVER_WORKER_PROCESSES: 1
@@ -23,7 +23,7 @@ services:
       SCARLETT_ENABLE_SSHD: 0
       SCARLETT_ENABLE_DBUS: 'true'
       SCARLETT_BUILD_GNOME: 'true'
-      TRAVIS_CI: 'true'
+      TRAVIS_CI: 'false'
     volumes:
     - ./container/root/tests/gtk3_deps.yaml:/gtk3_deps.yaml
     ports:

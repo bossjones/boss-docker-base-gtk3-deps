@@ -1,0 +1,9 @@
+#!/usr/bin/execlineb -S0
+
+# execlineb reads and executes a script.
+
+# execlineb sets the # environment variable to the number n of args it is given.
+# It sets the 0 environment variable to the name of the script - or to the execlineb invocation name if the -c option is used.
+
+# NOTE: Try this # /usr/bin/with-contenv /usr/bin/env perl "$@"
+/usr/bin/with-contenv /usr/bin/env perl $@

@@ -1,0 +1,41 @@
+#!/usr/bin/execlineb -P
+# -*- mode: bash -*-
+# vi: set ft=bash:
+
+########################################################################################
+# NOTE: Regarding execlineb -P
+# The -P option will bypass positional parameter handling completely:
+# the environment will not be pushed, and positional parameters will be ignored.
+# execlineb -P -c "script" is equivalent to, but more efficient than,
+# execlineb -c "emptyenv -P script".
+# You should use the -P option only in standalone scripts that take no arguments,
+# such as s6's or runit's run scripts.
+########################################################################################
+
+# SOURCE: https://github.com/psmb/docker-neos-alpine/blob/758b1674268b1a0c5ab7698b6134b95e810f480b/root/etc/cont-init.d/00-init-ssh
+
+# NOTE: We prepend a space before each echo to make the output cleaner from s6
+foreground { s6-echo " [run] ssh-keygen -A" }
+foreground { s6-echo " [run] Generate SSH host keys on container (re)start if they are not present" }
+
+if -n { s6-test -f /etc/ssh/ssh_host_* }
+ssh-keygen -A
+
+# echo '[run] Generate SSH host keys on container (re)start if they are not present'
+# [ -f /etc/ssh/ssh_host_rsa_key ] || ssh-keygen -q -b 1024 -N '' -t rsa -f /etc/ssh/ssh_host_rsa_key
+# [ -f /etc/ssh/ssh_host_dsa_key ] || ssh-keygen -q -b 1024 -N '' -t dsa -f /etc/ssh/ssh_host_dsa_key
+# [ -f /etc/ssh/ssh_host_ecdsa_key ] || ssh-keygen -q -b 521  -N '' -t ecdsa -f /etc/ssh/ssh_host_ecdsa_key
+# [ -f /etc/ssh/ssh_host_ed25519_key ] || ssh-keygen -q -b 1024 -N '' -t ed25519 -f /etc/ssh/ssh_host_ed25519_key
+
+# sudo mkdir -p /var/run/sshd
+# sudo chmod 750 /var/run/sshd
+# sudo chown -R pi:pi /var/run/sshd
+
+# source: https://github.com/webdevops/Dockerfile/blob/6e2820737a39a17908c8a2fca0905498512f0620/docker/base/ubuntu-16.04/conf/bin/service.d/ssh.d/10-init.sh
+# Init ssh privilege separation directory
+# mkdir -p /var/run/sshd
+# chown root:root /var/run/sshd
+# chmod 755 /var/run/sshd
+
+# generate host keys
+# ssh-keygen -A

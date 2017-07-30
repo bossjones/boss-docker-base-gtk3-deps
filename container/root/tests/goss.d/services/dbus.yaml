@@ -1,0 +1,4 @@
+---
+# s6-svstat -o up,ready
+# s6-svstat -o up,ready (or its equivalent s6-svstat -ur) will print true true if the service is up and ready, true false if the service has been started but has not notified readiness yet, false true if it is down and can be started, and false false if it is down and there's a ./finish script running that needs to exit before the service can be restarted.
+# source: https://skarnet.org/software/s6/s6-svstat.html

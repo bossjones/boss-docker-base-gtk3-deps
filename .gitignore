@@ -1,0 +1,16 @@
+*.xterm
+sshd_log.txt
+
+# ruby
+.bundle/
+.vendor/
+
+# arbirtary files
+env.log
+env_to_change
+env_to_change_envvar
+temp
+
+artifacts/gnome
+**/artifacts/*
+*.vscode/tags

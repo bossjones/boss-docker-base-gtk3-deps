@@ -1,0 +1,65 @@
+// Place your settings in this file to overwrite default and user settings.
+{
+    "editor.renderWhitespace": "all",
+
+    // The path of the shell that the terminal uses on Linux.
+    "terminal.integrated.shell.linux": "/usr/local/bin/bash",
+
+    // Path to the shellcheck executable.
+    "shellcheck.executablePath": "/usr/local/bin/shellcheck",
+
+    // The command line arguments to use when on the Linux terminal.
+    // "terminal.integrated.shellArgs.linux": [],
+
+    // The path of the shell that the terminal uses on OS X.
+    "terminal.integrated.shell.osx": "/usr/local/bin/bash",
+
+    // The command line arguments to use when on the OS X terminal.
+    // "terminal.integrated.shellArgs.osx": [],
+    "workbench.iconTheme": "material-icon-theme",
+    "window.zoomLevel": -1,
+    // "workbench.colorTheme": "Material Theme Palenight",
+    "files.insertFinalNewline": true,
+
+    "files.exclude": {
+        "out": false, // set this to true to hide the "out" folder with the compiled JS files
+        "**/*.pyc": true,
+        "**/__pycache__": true,
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/.DS_Store": true,
+        "**/.vendor": true,
+        "**/.bundle": true,
+        "**/*.xterm": true
+    },
+    "files.trimTrailingWhitespace": true,
+    "search.exclude": {
+        "**/node_modules": true,
+        "**/bower_components": true,
+        "**/.vscode/tags": true,
+        "**/.vendor": true,
+        "**/build": true,
+        "**/.bundle": true,
+        "**/*.xterm": true
+    },
+    "python.pythonPath": "/usr/local/bin/python3",
+    "python.formatting.provider": "autopep8",
+    "python.linting.ignorePatterns": [
+      ".vscode/*.py",
+      "**/site-packages/**/*.py"
+    ],
+    "python.venvPath": "~/.virtualenvs",
+    "terminal.integrated.shellArgs.osx": ["-l"],
+    "terminal.integrated.shellArgs.linux": ["-l"],
+
+    // A glob pattern that defines the files to search for. Only include files you need, DO NOT USE `**/*.*` for both permormance and avoiding binary files reason
+    "todohighlight.include": "{**/*.js,**/*.jsx,**/*.ts,**/*.tsx,**/*.html,**/*.php,**/*.css,**/*.scss,**/*.mk,**/Makefile}",
+    "files.associations": {
+        "Vagrantfile": "ruby"
+    },
+    // Points to the restructuredtext-lint exectuable.
+    "restructuredtext.linter.executablePath": "/usr/local/bin/restructuredtext-lint",
+    // The full path of sphinx-build utility. This is an absolute path.
+    "restructuredtext.sphinxBuildPath": "/usr/local/bin/sphinx-build"
+}

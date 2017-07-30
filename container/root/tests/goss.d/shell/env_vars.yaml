@@ -1,0 +1,234 @@
+---
+command:
+  echo $CC:
+    exit-status: 0
+    stdout:
+      - 'gcc'
+  echo $CCACHE_DIR:
+    exit-status: 0
+    stdout:
+      - '/ccache'
+  echo $CFLAGS:
+    exit-status: 0
+    stdout:
+      - '-fPIC -O0 -ggdb -fno-inline -fno-omit-frame-pointer'
+  echo $DEBIAN_FRONTEND:
+    exit-status: 0
+    stdout:
+      - 'noninteractive'
+  echo $ENABLE_GTK:
+    exit-status: 0
+    stdout:
+      - 'yes'
+  echo $ENABLE_PYTHON3:
+    exit-status: 0
+    stdout:
+      - 'yes'
+  echo $GID:
+    exit-status: 0
+    stdout:
+      - '1000'
+  echo $GITHUB_BRANCH:
+    exit-status: 0
+    stdout:
+      - 'master'
+  echo $GITHUB_REPO_NAME:
+    exit-status: 0
+    stdout:
+      - 'scarlett_os'
+  echo $GITHUB_REPO_ORG:
+    exit-status: 0
+    stdout:
+      - 'bossjones'
+  echo $GOSS_VERSION:
+    exit-status: 0
+    stdout:
+      - 'v0.2.3'
+  echo $GST_PLUGIN_PATH:
+    exit-status: 0
+    stdout:
+      - '/home/pi/.virtualenvs/scarlett_os/lib/gstreamer-1.0'
+  echo $GSTREAMER:
+    exit-status: 0
+    stdout:
+      - '1.0'
+  echo $HOME:
+    exit-status: 0
+    stdout:
+      - '/home/pi'
+  echo $JHBUILD:
+    exit-status: 0
+    stdout:
+      - '/home/pi/gnome'
+  echo $LANG:
+    exit-status: 0
+    stdout:
+      - 'C.UTF-8'
+  echo $LANGUAGE_ID:
+    exit-status: 0
+    stdout:
+      - '1473'
+  echo $LC_ALL:
+    exit-status: 0
+    stdout:
+      - 'en_US.UTF-8'
+  echo $LD_LIBRARY_PATH:
+    exit-status: 0
+    stdout:
+      - '/home/pi/.virtualenvs/scarlett_os/lib'
+  echo $MAIN_DIR:
+    exit-status: 0
+    stdout:
+      - '/home/pi/dev/bossjones-github/scarlett_os'
+  echo $MAKEFLAGS:
+    exit-status: 0
+    stdout:
+      - '-j4 V=1'
+  echo $NOT_ROOT_USER:
+    exit-status: 0
+    stdout:
+      - 'pi'
+  echo $NOTVISIBLE:
+    exit-status: 0
+    stdout:
+      - 'in users profile'
+  echo $PACKAGES:
+    exit-status: 0
+    stdout:
+      - 'python3-gi python3-gi-cairo'
+  echo $PATH:
+    exit-status: 0
+    stdout:
+      - '/home/pi/jhbuild/bin:/home/pi/jhbuild/sbin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+  echo $PATH_TO_DOT_VIRTUALENV:
+    exit-status: 0
+    stdout:
+      - '/home/pi/.virtualenvs'
+  echo $PI_HOME:
+    exit-status: 0
+    stdout:
+      - '/home/pi'
+  echo $PIP_DOWNLOAD_CACHE:
+    exit-status: 0
+    stdout:
+      - '/home/pi/.pip/cache'
+  echo $PKG_CONFIG_PATH:
+    exit-status: 0
+    stdout:
+      - '/home/pi/.virtualenvs/scarlett_os/lib/pkgconfig'
+  echo $PREFIX:
+    exit-status: 0
+    stdout:
+      - '/home/pi/jhbuild'
+  echo $PROJECT_HOME:
+    exit-status: 0
+    stdout:
+      - '/home/pi/dev'
+  echo $PYTHON:
+    exit-status: 0
+    stdout:
+      - '/usr/local/bin/python3'
+  echo $PYTHONPATH:
+    exit-status: 0
+    stdout:
+      - '/home/pi/jhbuild/lib/python3.5/site-packages:/usr/lib/python3.5/site-packages'
+  echo $PYTHON_PIP_VERSION:
+    exit-status: 0
+    stdout:
+      - '8.1.2'
+  echo $PYTHONSTARTUP:
+    exit-status: 0
+    stdout:
+      - '/home/pi/.pythonrc'
+  echo $PYTHONUNBUFFERED:
+    exit-status: 0
+    stdout:
+      - '1'
+  echo $PYTHON_VERSION:
+    exit-status: 0
+    stdout:
+      - '3.5'
+  echo $PYTHON_VERSION_MAJOR:
+    exit-status: 0
+    stdout:
+      - '3'
+  echo $S6_VERSION:
+    exit-status: 0
+    stdout:
+      - 'v1.18.1.5'
+  echo $SCARLETT_CONFIG:
+    exit-status: 0
+    stdout:
+      - '/home/pi/dev/bossjones-github/scarlett_os/tests/fixtures/.scarlett'
+  echo $SCARLETT_DICT:
+    exit-status: 0
+    stdout:
+      - '/home/pi/dev/bossjones-github/scarlett_os/static/speech/dict/1473.dic'
+  echo $SCARLETT_HMM:
+    exit-status: 0
+    stdout:
+      - '/home/pi/dev/bossjones-github/scarlett_os/static/speech/hmm/en_US/hub4wsj_sc_8k'
+  echo $SCARLETT_LM:
+    exit-status: 0
+    stdout:
+      - '/home/pi/dev/bossjones-github/scarlett_os/static/speech/lm/1473.lm'
+  echo $TERM:
+    exit-status: 0
+    stdout:
+      - 'xterm-256color'
+  echo $UID:
+    exit-status: 0
+    stdout:
+      - '1000'
+  echo $UNAME:
+    exit-status: 0
+    stdout:
+      - 'pi'
+  echo $USER:
+    exit-status: 0
+    stdout:
+      - 'pi'
+  echo $USER_HOME:
+    exit-status: 0
+    stdout:
+      - '/home/pi'
+  echo $USER_SSH_PUBKEY:
+    exit-status: 0
+    stdout:
+      - 'ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEA6NF8iallvQVp22WDkTkyrtvp9eWW6A8YVr+kz4TjGYe7gHzIw+niNltGEFHzD8+v1I2YJ6oXevct1YeS0o9HZyN1Q9qgCgzUFtdOKLv6IedplqoPkcmF0aYet2PkEDo3MlTBckFXPITAMzF8dJSIFo9D8HfdOV0IAdx4O7PtixWKn5y2hMNG0zQPyUecp4pzC6kivAIhyfHilFR61RGL+GPXQ2MWZWFYbAGjyiYJnAmCP3NOTd0jMZEnDkbUvxhMmBYSdETk1rRgm+R4LOzFUGaHqHDLKLX+FIPKcF96hrucXzcWyLbIbEgE98OHlnVYCzRdK8jlqm8tehUc9c9WhQ== vagrant insecure public key'
+  echo $VIRT_ROOT:
+    exit-status: 0
+    stdout:
+      - '/home/pi/.virtualenvs/scarlett_os'
+  echo $VIRTUALENVWRAPPER_PYTHON:
+    exit-status: 0
+    stdout:
+      - '/usr/local/bin/python3'
+  echo $VIRTUALENVWRAPPER_SCRIPT:
+    exit-status: 0
+    stdout:
+      - '/usr/local/bin/virtualenvwrapper.sh'
+  echo $VIRTUALENV_WRAPPER_SH:
+    exit-status: 0
+    stdout:
+      - '/usr/local/bin/virtualenvwrapper.sh'
+  echo $VIRTUALENVWRAPPER_VIRTUALENV:
+    exit-status: 0
+    stdout:
+      - '/usr/local/bin/virtualenv'
+  echo $WORKON_HOME:
+    exit-status: 0
+    stdout:
+      - '/home/pi/.virtualenvs/scarlett_os'
+  echo $XDG_CONFIG_DIRS:
+    exit-status: 0
+    stdout:
+      - '/home/pi/jhbuild/etc/xdg'
+  echo $XDG_DATA_DIRS:
+    exit-status: 0
+    stdout:
+      - '/home/pi/jhbuild/share:/usr/share'
+  echo $XDG_RUNTIME_DIR:
+    exit-status: 0
+    stdout:
+      - '/run/user/1000'

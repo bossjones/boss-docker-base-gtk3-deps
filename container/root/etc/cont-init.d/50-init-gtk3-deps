@@ -1,0 +1,141 @@
+#!/usr/bin/execlineb -PW
+# Normally the EXECLINE_STRICT environment variable is inherited from the caller.
+# You can force it unset, set to 1, or set to 2 by giving respectively the -q, -w or -W option to execlineb.
+# -*- mode: bash -*-
+# vi: set ft=bash:
+
+# source: https://askubuntu.com/questions/490620/difference-between-logname-and-logname
+
+# NOTE: foreground program
+# foreground { prog1... } prog2...
+# foreground is the basic sequence operator: it takes two commands and executes them one by one.
+# execline scripts require it to wrap external commands that exit instead of natively supporting the "perform some action,
+# then execute some other program" model.
+# foreground prog1... "" prog2... is equivalent to sh -c 'prog1... ; exec prog2...'
+foreground { s6-echo " [run] goss base-gtk3-deps tests" }
+
+# NOTE: pull in environment vars from container
+with-contenv
+
+# NOTE: Echo status, then dump env program to stdout
+foreground { s6-echo " [run] env before multisubstitute" } s6-env
+
+# NOTE: s6-envuidgid program
+# s6-envuidgid potentially sets the UID,
+# GID and GIDLIST environment variables according to
+# the options and arguments it is given; then it executes into another program.
+# s6-envuidgid [ -u | -g | -B ] [ -n ] [ -i | -D uid:gid:gidlist ] account prog...
+# NOTE: set UID and GID env vars to pi
+s6-envuidgid pi
+
+foreground { s6-echo " [run] multisubstitute for base-gtk3-deps tests" }
+
+# NOTE: multisubstitute program [ help output is only a subset of full options ]
+#  multisubstitute performs several substitutions at once in its argv, then executes another program.
+#  multisubstitute
+#      {
+#        [ define [ -n ] [ -s ] [ -C | -c ] [ -d delim ] variable value ]
+#        [ importas [ -i | -D default ] [ -n ] [ -s ] [ -C | -c ] [ -d delim ] variable envvar ]
+#        ...
+#      }
+#      prog...
+multisubstitute
+{
+  importas UID UID
+  importas GID GID
+  importas DEBIAN_FRONTEND DEBIAN_FRONTEND
+  importas LANG LANG
+  importas LC_ALL LC_ALL
+  importas UNAME UNAME
+  importas NOT_ROOT_USER NOT_ROOT_USER
+  importas USER_HOME USER_HOME
+  importas PROJECT_HOME PROJECT_HOME
+  importas SKIP_ON_TRAVIS SKIP_ON_TRAVIS
+  importas CURRENT_DIR CURRENT_DIR
+  importas GSTREAMER GSTREAMER
+  importas ENABLE_PYTHON3 ENABLE_PYTHON3
+  importas ENABLE_GTK ENABLE_GTK
+  importas PREFIX PREFIX
+  importas JHBUILD JHBUILD
+  importas PATH PATH
+  importas LD_LIBRARY_PATH LD_LIBRARY_PATH
+  importas PYTHONPATH PYTHONPATH
+  importas PKG_CONFIG_PATH PKG_CONFIG_PATH
+  importas XDG_DATA_DIRS XDG_DATA_DIRS
+  importas XDG_CONFIG_DIRS XDG_CONFIG_DIRS
+  importas PYTHON PYTHON
+  importas NOTVISIBLE NOTVISIBLE
+  importas VIRTUALENVWRAPPER_VIRTUALENV VIRTUALENVWRAPPER_VIRTUALENV
+  importas VIRTUALENV_WRAPPER_SH VIRTUALENV_WRAPPER_SH
+  importas PYTHONUNBUFFERED PYTHONUNBUFFERED
+  importas PYTHON_VERSION_MAJOR PYTHON_VERSION_MAJOR
+  importas USER USER
+  importas LANGUAGE_ID LANGUAGE_ID
+  importas GITHUB_BRANCH GITHUB_BRANCH
+  importas GITHUB_REPO_NAME GITHUB_REPO_NAME
+  importas GITHUB_REPO_ORG GITHUB_REPO_ORG
+  importas PI_HOME PI_HOME
+  importas MAIN_DIR MAIN_DIR
+  importas VIRT_ROOT VIRT_ROOT
+  importas SCARLETT_CONFIG SCARLETT_CONFIG
+  importas SCARLETT_HMM SCARLETT_HMM
+  importas SCARLETT_LM SCARLETT_LM
+  importas SCARLETT_DICT SCARLETT_DICT
+  importas GST_PLUGIN_PATH GST_PLUGIN_PATH
+  importas PYTHON_VERSION PYTHON_VERSION
+  importas VIRTUALENVWRAPPER_PYTHON VIRTUALENVWRAPPER_PYTHON
+  importas VIRTUALENVWRAPPER_SCRIPT VIRTUALENVWRAPPER_SCRIPT
+  importas PYTHONSTARTUP PYTHONSTARTUP
+  importas PIP_DOWNLOAD_CACHE PIP_DOWNLOAD_CACHE
+  importas WORKON_HOME WORKON_HOME
+  importas USER_SSH_PUBKEY USER_SSH_PUBKEY
+  importas HOME HOME
+  importas XDG_RUNTIME_DIR XDG_RUNTIME_DIR
+  importas SIGNAL_BUILD_STOP SIGNAL_BUILD_STOP
+  importas TRAVIS_CI TRAVIS_CI
+}
+
+################################################################################
+# DEBUG: Enable this if you need to validate environment variables
+# foreground { s6-echo " [run] AFTER s6-env -i" }
+# foreground { s6-env }
+################################################################################
+
+foreground {
+    # NOTE: if program
+    # if [ -X ] [ -n ] [ -t | -x exitcode ] { prog1... } prog2...
+    # if will exit if prog1... exits false. To use it in an execline script that must run prog3... no matter the result of the test, use a foreground wrapper:
+    # foreground { if { prog1... } prog2... } prog3...
+    # -X : treat a crash of prog1 as a non-zero ("false") exit.
+    # -n : negate the test (exit on true, exec into prog2 on false)
+    # -x exitcode : exit exitcode instead of 1 if the test fails.
+    # -t : exit 0 instead of 1 if the test fails. This is equivalent to -x 0.
+    if {
+        if { s6-echo " [run] lets start these goss tests..." }
+        # NOTE: verify that we're the correct user, pi
+        foreground {
+            s6-applyuidgid -u 1000 -g 1000
+            cd /tests
+            /usr/local/bin/goss -g ./goss.gtk3_deps.yaml validate --retry-timeout 30s --sleep 1s
+        }
+        # NOTE: UNCOMMENT THIS LINE IF YOU NEED TO TEST THIS LOGIC WITHOUT RUNNING TESTS # foreground { s6-echo " [run] pretend we just ran s6-applyuidgid -u 1000 -g 1000 /usr/local/bin/goss -g /tests/goss.jhbuild.yaml validate --retry-timeout 30s --sleep 1s" }
+        # foreground { s6-echo " [run] pretend we just ran s6-applyuidgid -u 1000 -g 1000 /usr/local/bin/goss -g /tests/goss.jhbuild.yaml validate --retry-timeout 30s --sleep 1s" }
+        # NOTE: importas program
+        # importas [ -i | -D default ] [ -u ] [ -s ] [ -C | -c ] [ -n ] [ -d delim ] variable envvar prog...
+        # D default : If this option is given and envvar is undefined, substitute default for the value of variable instead of no word. For instance, to substitute the empty word, use -D "".
+        # -i : Insist. If envvar is undefined, importas will not do anything; instead, it will exit 100 with an error message. This has precedence over any -D option.
+        # -u : Unexport. envvar will be removed from the environment after the substitution. importas -u variable envvar is equivalent to importas variable envvar unexport envvar.
+        # Other options are used to control the substitution mechanism.
+        importas REXIT ?
+        foreground { s6-echo " [run] goss exited ${REXIT}." }
+        foreground { s6-echo " [run] goss tests ran succesfully fool" }
+    }
+}
+
+
+foreground { s6-echo " [run] AFTER foreground goss tests" }
+
+# NOTE: if program
+# -t = exit 0 if test fails
+if -t { s6-test $TRAVIS_CI = true } foreground { s6-echo " [run] TRAVIS_CI: '${TRAVIS_CI}' ... sending signal build stop" }
+exit ${SIGNAL_BUILD_STOP}

@@ -1,0 +1,234 @@
+---
+command:
+  cat /var/run/s6/container_environment/CC:
+    exit-status: 0
+    stdout:
+      - 'gcc'
+  cat /var/run/s6/container_environment/CCACHE_DIR:
+    exit-status: 0
+    stdout:
+      - '/ccache'
+  cat /var/run/s6/container_environment/CFLAGS:
+    exit-status: 0
+    stdout:
+      - '-fPIC -O0 -ggdb -fno-inline -fno-omit-frame-pointer'
+  cat /var/run/s6/container_environment/DEBIAN_FRONTEND:
+    exit-status: 0
+    stdout:
+      - 'noninteractive'
+  cat /var/run/s6/container_environment/ENABLE_GTK:
+    exit-status: 0
+    stdout:
+      - 'yes'
+  cat /var/run/s6/container_environment/ENABLE_PYTHON3:
+    exit-status: 0
+    stdout:
+      - 'yes'
+  cat /var/run/s6/container_environment/GID:
+    exit-status: 0
+    stdout:
+      - '1000'
+  cat /var/run/s6/container_environment/GITHUB_BRANCH:
+    exit-status: 0
+    stdout:
+      - 'master'
+  cat /var/run/s6/container_environment/GITHUB_REPO_NAME:
+    exit-status: 0
+    stdout:
+      - 'scarlett_os'
+  cat /var/run/s6/container_environment/GITHUB_REPO_ORG:
+    exit-status: 0
+    stdout:
+      - 'bossjones'
+  cat /var/run/s6/container_environment/GOSS_VERSION:
+    exit-status: 0
+    stdout:
+      - 'v0.2.3'
+  cat /var/run/s6/container_environment/GST_PLUGIN_PATH:
+    exit-status: 0
+    stdout:
+      - '/home/pi/.virtualenvs/scarlett_os/lib/gstreamer-1.0'
+  cat /var/run/s6/container_environment/GSTREAMER:
+    exit-status: 0
+    stdout:
+      - '1.0'
+  cat /var/run/s6/container_environment/HOME:
+    exit-status: 0
+    stdout:
+      - '/home/pi'
+  cat /var/run/s6/container_environment/JHBUILD:
+    exit-status: 0
+    stdout:
+      - '/home/pi/gnome'
+  cat /var/run/s6/container_environment/LANG:
+    exit-status: 0
+    stdout:
+      - 'C.UTF-8'
+  cat /var/run/s6/container_environment/LANGUAGE_ID:
+    exit-status: 0
+    stdout:
+      - '1473'
+  cat /var/run/s6/container_environment/LC_ALL:
+    exit-status: 0
+    stdout:
+      - 'en_US.UTF-8'
+  cat /var/run/s6/container_environment/LD_LIBRARY_PATH:
+    exit-status: 0
+    stdout:
+      - '/home/pi/.virtualenvs/scarlett_os/lib'
+  cat /var/run/s6/container_environment/MAIN_DIR:
+    exit-status: 0
+    stdout:
+      - '/home/pi/dev/bossjones-github/scarlett_os'
+  cat /var/run/s6/container_environment/MAKEFLAGS:
+    exit-status: 0
+    stdout:
+      - '-j4 V=1'
+  cat /var/run/s6/container_environment/NOT_ROOT_USER:
+    exit-status: 0
+    stdout:
+      - 'pi'
+  cat /var/run/s6/container_environment/NOTVISIBLE:
+    exit-status: 0
+    stdout:
+      - 'in users profile'
+  cat /var/run/s6/container_environment/PACKAGES:
+    exit-status: 0
+    stdout:
+      - 'python3-gi python3-gi-cairo'
+  cat /var/run/s6/container_environment/PATH:
+    exit-status: 0
+    stdout:
+      - '/home/pi/jhbuild/bin:/home/pi/jhbuild/sbin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+  cat /var/run/s6/container_environment/PATH_TO_DOT_VIRTUALENV:
+    exit-status: 0
+    stdout:
+      - '/home/pi/.virtualenvs'
+  cat /var/run/s6/container_environment/PI_HOME:
+    exit-status: 0
+    stdout:
+      - '/home/pi'
+  cat /var/run/s6/container_environment/PIP_DOWNLOAD_CACHE:
+    exit-status: 0
+    stdout:
+      - '/home/pi/.pip/cache'
+  cat /var/run/s6/container_environment/PKG_CONFIG_PATH:
+    exit-status: 0
+    stdout:
+      - '/home/pi/.virtualenvs/scarlett_os/lib/pkgconfig'
+  cat /var/run/s6/container_environment/PREFIX:
+    exit-status: 0
+    stdout:
+      - '/home/pi/jhbuild'
+  cat /var/run/s6/container_environment/PROJECT_HOME:
+    exit-status: 0
+    stdout:
+      - '/home/pi/dev'
+  cat /var/run/s6/container_environment/PYTHON:
+    exit-status: 0
+    stdout:
+      - '/usr/local/bin/python3'
+  cat /var/run/s6/container_environment/PYTHONPATH:
+    exit-status: 0
+    stdout:
+      - '/home/pi/jhbuild/lib/python3.5/site-packages:/usr/lib/python3.5/site-packages'
+  cat /var/run/s6/container_environment/PYTHON_PIP_VERSION:
+    exit-status: 0
+    stdout:
+      - '8.1.2'
+  cat /var/run/s6/container_environment/PYTHONSTARTUP:
+    exit-status: 0
+    stdout:
+      - '/home/pi/.pythonrc'
+  cat /var/run/s6/container_environment/PYTHONUNBUFFERED:
+    exit-status: 0
+    stdout:
+      - '1'
+  cat /var/run/s6/container_environment/PYTHON_VERSION:
+    exit-status: 0
+    stdout:
+      - '3.5'
+  cat /var/run/s6/container_environment/PYTHON_VERSION_MAJOR:
+    exit-status: 0
+    stdout:
+      - '3'
+  cat /var/run/s6/container_environment/S6_VERSION:
+    exit-status: 0
+    stdout:
+      - 'v1.18.1.5'
+  cat /var/run/s6/container_environment/SCARLETT_CONFIG:
+    exit-status: 0
+    stdout:
+      - '/home/pi/dev/bossjones-github/scarlett_os/tests/fixtures/.scarlett'
+  cat /var/run/s6/container_environment/SCARLETT_DICT:
+    exit-status: 0
+    stdout:
+      - '/home/pi/dev/bossjones-github/scarlett_os/static/speech/dict/1473.dic'
+  cat /var/run/s6/container_environment/SCARLETT_HMM:
+    exit-status: 0
+    stdout:
+      - '/home/pi/dev/bossjones-github/scarlett_os/static/speech/hmm/en_US/hub4wsj_sc_8k'
+  cat /var/run/s6/container_environment/SCARLETT_LM:
+    exit-status: 0
+    stdout:
+      - '/home/pi/dev/bossjones-github/scarlett_os/static/speech/lm/1473.lm'
+  cat /var/run/s6/container_environment/TERM:
+    exit-status: 0
+    stdout:
+      - 'xterm-256color'
+  cat /var/run/s6/container_environment/UID:
+    exit-status: 0
+    stdout:
+      - '1000'
+  cat /var/run/s6/container_environment/UNAME:
+    exit-status: 0
+    stdout:
+      - 'pi'
+  cat /var/run/s6/container_environment/USER:
+    exit-status: 0
+    stdout:
+      - 'pi'
+  cat /var/run/s6/container_environment/USER_HOME:
+    exit-status: 0
+    stdout:
+      - '/home/pi'
+  cat /var/run/s6/container_environment/USER_SSH_PUBKEY:
+    exit-status: 0
+    stdout:
+      - 'ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEA6NF8iallvQVp22WDkTkyrtvp9eWW6A8YVr+kz4TjGYe7gHzIw+niNltGEFHzD8+v1I2YJ6oXevct1YeS0o9HZyN1Q9qgCgzUFtdOKLv6IedplqoPkcmF0aYet2PkEDo3MlTBckFXPITAMzF8dJSIFo9D8HfdOV0IAdx4O7PtixWKn5y2hMNG0zQPyUecp4pzC6kivAIhyfHilFR61RGL+GPXQ2MWZWFYbAGjyiYJnAmCP3NOTd0jMZEnDkbUvxhMmBYSdETk1rRgm+R4LOzFUGaHqHDLKLX+FIPKcF96hrucXzcWyLbIbEgE98OHlnVYCzRdK8jlqm8tehUc9c9WhQ== vagrant insecure public key'
+  cat /var/run/s6/container_environment/VIRT_ROOT:
+    exit-status: 0
+    stdout:
+      - '/home/pi/.virtualenvs/scarlett_os'
+  cat /var/run/s6/container_environment/VIRTUALENVWRAPPER_PYTHON:
+    exit-status: 0
+    stdout:
+      - '/usr/local/bin/python3'
+  cat /var/run/s6/container_environment/VIRTUALENVWRAPPER_SCRIPT:
+    exit-status: 0
+    stdout:
+      - '/usr/local/bin/virtualenvwrapper.sh'
+  cat /var/run/s6/container_environment/VIRTUALENV_WRAPPER_SH:
+    exit-status: 0
+    stdout:
+      - '/usr/local/bin/virtualenvwrapper.sh'
+  cat /var/run/s6/container_environment/VIRTUALENVWRAPPER_VIRTUALENV:
+    exit-status: 0
+    stdout:
+      - '/usr/local/bin/virtualenv'
+  cat /var/run/s6/container_environment/WORKON_HOME:
+    exit-status: 0
+    stdout:
+      - '/home/pi/.virtualenvs/scarlett_os'
+  cat /var/run/s6/container_environment/XDG_CONFIG_DIRS:
+    exit-status: 0
+    stdout:
+      - '/home/pi/jhbuild/etc/xdg'
+  cat /var/run/s6/container_environment/XDG_DATA_DIRS:
+    exit-status: 0
+    stdout:
+      - '/home/pi/jhbuild/share:/usr/share'
+  cat /var/run/s6/container_environment/XDG_RUNTIME_DIR:
+    exit-status: 0
+    stdout:
+      - '/run/user/1000'

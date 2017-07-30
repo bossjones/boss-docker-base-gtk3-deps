@@ -1,0 +1,22 @@
+---
+command:
+  # "title" and "meta" are arbitrary values that will be printed out in the test output.
+  # "title" is a string value, "meta" is an aritrary set of key/value pairs.
+  # Here we are using meta to provide the user with checklist of possible remedies
+  # when this test fails
+  # title: Ensure we can resolve our backend db
+  # meta:
+  #   remedy.1: Check if mysql container logs contain errors
+  #   remedy.2: Check that both containers are using the same network
+  python3 --version:
+    exit-status: 0
+    # NOTE: on ['!/./']
+    # "One solution might be to inverse the check. Basically check that no line contains any content"
+    # source: https://github.com/aelsabbahy/goss/issues/145
+    stderr: ['!/./']
+  pip3 --version:
+    exit-status: 0
+    # NOTE: on ['!/./']
+    # "One solution might be to inverse the check. Basically check that no line contains any content"
+    # source: https://github.com/aelsabbahy/goss/issues/145
+    stderr: ['!/./']

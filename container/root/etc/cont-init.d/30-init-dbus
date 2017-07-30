@@ -1,0 +1,126 @@
+#!/usr/bin/execlineb -P
+# -*- mode: bash -*-
+# vi: set ft=bash:
+# NOTE:: https://github.com/nicjo814/docker-kodi/blob/8d4e7b7c2be098ff8db1026613d92a0f68ca3d33/root/etc/cont-init.d/30-dbus
+
+with-contenv
+
+# NOTE: fdmove program ( didn't have to use it here, but holding on to it for now )
+# fdmove moves or copies a given file descriptor, then executes a program.
+# fdmove [ -c ] fdto fdfrom prog...
+# fdmove moves the file descriptor number fdfrom, to number fdto, then execs into prog with its arguments. If fdto is open, fdmove closes it before moving fdfrom to it.
+# -c : duplicate fdfrom to fdto instead of moving it; do not close fdfrom.
+# fdmove -c a b prog... is roughly equivalent to sh -c 'exec prog... a>&b'
+# fdmove a b prog... is roughly equivalent to sh -c 'exec prog... a>&b b<&-'
+
+# NOTE: trap program
+# -x : forward signals. If this option is given, any signal that trap receives and that is not explicitly trapped will be sent to prog. By default, trap does not forward any signals, and does not ignore them either - for instance a SIGTERM, unless caught by a SIGTERM directive, will kill the trap process (and leave prog running). With the -x option, without a SIGTERM directive, a SIGTERM will be still be caught by trap, that will send it to prog.
+trap -x
+{
+  term
+  {
+    foreground
+    {
+      # NOTE: backtick program
+      # backtick runs a program and stores its output in an environment variable, then executes another program.
+      # backtick [ -i | -I | -D default ] [ -n ] variable { prog1... } prog2...
+      # -n : chomp an ending newline off prog1...'s output.
+      # -i : backtick exits 1.
+      # -I : variable is removed from the environment, and execution proceeds.
+      # -D default : the value of variable is set to default, and execution proceeds.
+      # neither of those options: the value of variable is set to whatever the start of prog1...'s output is, up to the first null character, or to whatever prog1... wrote before crashing; then execution proceeds.
+      # find location of PID_FILE
+      backtick -n PID_FILE { redirfd -w 2 /dev/null find /tmp -name 'pydbustest_pid_file*' -print }
+      backtick -n ADDRESS_FILE { redirfd -w 2 /dev/null find /tmp -name 'pydbustest_address*' -print }
+      backtick -n PID { redirfd -w 2 /dev/null cat ${PID_FILE} }
+
+      multisubstitute {
+        importas PID_FILE PID_FILE
+        importas ADDRESS_FILE ADDRESS_FILE
+        importas PID PID
+      }
+
+      foreground { s6-echo " [sigterm-dbus-daemon] PID_FILE:${PID_FILE}" }
+      foreground { s6-echo " [sigterm-dbus-daemon] ADDRESS_FILE:${ADDRESS_FILE}" }
+      foreground { s6-echo " [sigterm-dbus-daemon] PID:${PID}" }
+
+      # kill process
+      foreground {
+          kill -TERM ${PID}
+          rm ${ADDRESS_FILE}
+          rm ${PID_FILE}
+          rm /var/run/s6/container_environment/PID
+          rm /var/run/s6/container_environment/ADDRESS_FILE
+          rm /var/run/s6/container_environment/PID_FILE
+
+          rm /var/run/user/1000/env/PID
+          rm /var/run/user/1000/env/ADDRESS_FILE
+          rm /var/run/user/1000/env/PID_FILE
+      }
+    }
+    s6-echo " [sigterm-dbus-daemon] graceful shutdown complete"
+  }
+}
+
+backtick -n ADDRESS_FILE { redirfd -w 2 /dev/null s6-applyuidgid -u 1000 -g 1000 mktemp /tmp/pydbustest_address.XXXXXXXXX }
+backtick -n PID_FILE { redirfd -w 2 /dev/null s6-applyuidgid -u 1000 -g 1000 mktemp /tmp/pydbustest_pid_file.XXXXXXXXX }
+
+# Multisubstitue allows you to do parallel variable substitution.
+# Serial substitution can cause issues with vars not getting changed
+# at the same time
+multisubstitute {
+  importas ADDRESS_FILE ADDRESS_FILE
+  importas PID_FILE PID_FILE
+  # NOTE: This is needed for pydbus
+  importas DBUS_SESSION_BUS_ADDRESS DBUS_SESSION_BUS_ADDRESS
+}
+
+foreground { sudo chown pi:pi -R ${ADDRESS_FILE} ${PID_FILE} }
+foreground { s6-echo " [run-dbus-show] ADDRESS_FILE:${ADDRESS_FILE}" }
+foreground { s6-echo " [run-dbus-show] PID_FILE:${PID_FILE}" }
+
+foreground { s6-echo " [run] starting dbus-daemon ..." }
+
+# https://github.com/search?q=redirfd+-w+1&type=Code&utf8=%E2%9C%93
+# https://github.com/shirley-zhou/CS111/blob/052f16e0efcf5c83d042b7ef43f0b0f0f9bbb9df/lab1/exec5.sh
+# NOTE: redirfd program
+# redirfd redirects a given file descriptor to a file, then executes a program.
+# redirfd [ -r | -w | -u | -a | -c | -x ] [ -n | -b ] fd file prog...
+# -w : open file for writing, truncating it if it already exists.
+# 0	Standard input	STDIN_FILENO	stdin
+# 1	Standard output	STDOUT_FILENO	stdout
+# 2	Standard error	STDERR_FILENO	stderr
+foreground {
+  redirfd -w 0 $ADDRESS_FILE
+  redirfd -w 1 $PID_FILE
+  s6-applyuidgid -u 1000 -g 1000 dbus-daemon --session --print-address=0 --print-pid=1 --fork
+}
+foreground {
+  # 1. Grab the pid number from running dbus
+  backtick -n PID { redirfd -w 2 /dev/null cat ${PID_FILE} }
+  # 2. Grab the DBUS_SESSION_BUS_ADDRESS from running dbus service
+  backtick -n DBUS_SESSION_BUS_ADDRESS { redirfd -w 2 /dev/null cat ${ADDRESS_FILE} }
+
+  # define the variables in parallel
+  multisubstitute {
+    importas PID PID
+    importas DBUS_SESSION_BUS_ADDRESS DBUS_SESSION_BUS_ADDRESS
+  }
+
+  # -i: Invoke utility with exactly the environment specified by the arguments; the inherited environment shall be ignored completely.
+  # source: http://pubs.opengroup.org/onlinepubs/9699919799/utilities/env.html
+  # s6-env -i
+  # ADDRESS_FILE=$ADDRESS_FILE
+  # PID_FILE=$PID_FILE
+  # DBUS_SESSION_BUS_ADDRESS=$DBUS_SESSION_BUS_ADDRESS
+
+  # persist them to disk so upstream containers can use it as well
+  foreground {
+    # persist to dynenv first
+    s6-env -i
+    PID=$PID
+    DBUS_SESSION_BUS_ADDRESS=$DBUS_SESSION_BUS_ADDRESS
+    s6-dumpenv -- /var/run/user/1000/env
+  }
+  s6-dumpenv -- /var/run/s6/container_environment
+}
