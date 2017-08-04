@@ -10,6 +10,7 @@ ARG SCARLETT_ENABLE_SSHD
 ARG SCARLETT_ENABLE_DBUS
 ARG SCARLETT_BUILD_GNOME
 ARG TRAVIS_CI
+ARG SKIP_GOSS_TESTS_GTK_DEPS
 
 # metadata
 ARG CONTAINER_VERSION
@@ -20,11 +21,7 @@ ENV SCARLETT_ENABLE_SSHD ${SCARLETT_ENABLE_SSHD:-0}
 ENV SCARLETT_ENABLE_DBUS ${SCARLETT_ENABLE_DBUS:-'true'}
 ENV SCARLETT_BUILD_GNOME ${SCARLETT_BUILD_GNOME:-'true'}
 ENV TRAVIS_CI ${TRAVIS_CI:-'true'}
-
-RUN echo "SCARLETT_ENABLE_SSHD: ${SCARLETT_ENABLE_SSHD}"
-RUN echo "SCARLETT_ENABLE_DBUS: ${SCARLETT_ENABLE_DBUS}"
-RUN echo "SCARLETT_BUILD_GNOME: ${SCARLETT_BUILD_GNOME}"
-RUN echo "TRAVIS_CI: ${TRAVIS_CI}"
+ENV SKIP_GOSS_TESTS_GTK_DEPS ${SKIP_GOSS_TESTS_GTK_DEPS:-'false'}
 
 # Avoid ERROR: invoke-rc.d: policy-rc.d denied execution of start.
 # So, to prevent services from being started automatically when you install packages with dpkg, apt, etc., just do this (as root):
@@ -643,19 +640,19 @@ RUN bash /prep-pi.sh && \
     git config --global color.ui true && \
     sudo mv /home/pi/.ssh /home/pi/.ssh.bak && \
     sudo mv /home/pi/.ssh.bak /home/pi/.ssh && \
-    ls -lta /home/pi/.ssh
+    ls -lta /home/pi/.ssh && \
+    echo "SCARLETT_ENABLE_SSHD: ${SCARLETT_ENABLE_SSHD}" && \
+    echo "SCARLETT_ENABLE_DBUS: ${SCARLETT_ENABLE_DBUS}" && \
+    echo "SCARLETT_BUILD_GNOME: ${SCARLETT_BUILD_GNOME}" && \
+    echo "TRAVIS_CI: ${TRAVIS_CI}" && \
+    bash /prep-pi.sh && \
+    sudo chmod +x /prep-pi.sh /scripts/write_xdg_dir_init.sh && \
+    sudo bash /prep-pi.sh && \
+    sudo bash /scripts/write_xdg_dir_init.sh "pi" && \
+    sudo bash /scripts/write_xdg_dir_init.sh "root"
 
 # NOTE: Return to root user when finished
 USER root
-
-# NOTE: Prepare XDG_RUNTIME_DIR and everything else
-# we need to run our scripts correctly
-RUN bash /prep-pi.sh && \
-    bash /scripts/write_xdg_dir_init.sh "pi" && \
-    bash /scripts/write_xdg_dir_init.sh "root"; \
-
-    mkdir -p /artifacts && sudo chown -R pi:pi /artifacts && \
-    ls -lta /artifacts
 
 CMD ["/bin/bash", "/run.sh"]
 
