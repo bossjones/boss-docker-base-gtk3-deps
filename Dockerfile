@@ -318,6 +318,7 @@ RUN \
                         libasound2-dev \
                         libgudev-1.0-dev \
                         libxt-dev \
+                        file \
                         libvorbis-dev \
                         libcdparanoia-dev \
                         libpango1.0-dev \
