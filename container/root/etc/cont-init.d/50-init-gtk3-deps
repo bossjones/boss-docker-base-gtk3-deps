@@ -20,10 +20,6 @@ with-contenv
 # NOTE: Echo status, then dump env program to stdout
 foreground { s6-echo " [run] env before multisubstitute" }
 
-if -t { s6-test $SKIP_GOSS_TESTS_JHBUILD = true }
-foreground { s6-echo " [run] SKIP_GOSS_TESTS_JHBUILD: '${SKIP_GOSS_TESTS_JHBUILD}' ... skipping ..." }
-exit 0
-
 # NOTE: s6-envuidgid program
 # s6-envuidgid potentially sets the UID,
 # GID and GIDLIST environment variables according to
@@ -107,6 +103,11 @@ multisubstitute
 # foreground { s6-env }
 ################################################################################
 
+# if -t { s6-test $SKIP_GOSS_TESTS_JHBUILD = true }
+# foreground { s6-echo " [run] SKIP_GOSS_TESTS_JHBUILD: '${SKIP_GOSS_TESTS_JHBUILD}' ... skipping ..." }
+# exit 0
+
+
 foreground {
     # NOTE: if program
     # if [ -X ] [ -n ] [ -t | -x exitcode ] { prog1... } prog2...
@@ -119,11 +120,14 @@ foreground {
     if {
         if { s6-echo " [run] lets start these goss tests..." }
         # NOTE: verify that we're the correct user, pi
-        foreground {
-            s6-applyuidgid -u 1000 -g 1000
-            cd /tests
-            /usr/local/bin/goss -g ./goss.gtk3_deps.yaml validate --retry-timeout 30s --sleep 1s
-        }
+        ifelse { s6-test $SKIP_GOSS_TESTS_JHBUILD = false }
+        {
+            foreground {
+                s6-applyuidgid -u 1000 -g 1000
+                cd /tests
+                /usr/local/bin/goss -g ./goss.gtk3_deps.yaml validate --retry-timeout 30s --sleep 1s
+            }
+        } s6-true
         # NOTE: UNCOMMENT THIS LINE IF YOU NEED TO TEST THIS LOGIC WITHOUT RUNNING TESTS # foreground { s6-echo " [run] pretend we just ran s6-applyuidgid -u 1000 -g 1000 /usr/local/bin/goss -g /tests/goss.gtk3_deps.yaml validate --retry-timeout 30s --sleep 1s" }
         # foreground { s6-echo " [run] pretend we just ran s6-applyuidgid -u 1000 -g 1000 /usr/local/bin/goss -g /tests/goss.gtk3_deps.yaml validate --retry-timeout 30s --sleep 1s" }
         # NOTE: importas program
