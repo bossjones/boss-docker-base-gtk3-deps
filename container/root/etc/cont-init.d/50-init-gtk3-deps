@@ -18,11 +18,11 @@ foreground { s6-echo " [run] goss base-gtk3-deps tests" }
 with-contenv
 
 # NOTE: Echo status, then dump env program to stdout
-foreground { s6-echo " [run] env before multisubstitute" } s6-env
+foreground { s6-echo " [run] env before multisubstitute" }
 
-if -t { s6-test $SKIP_GOSS_TESTS_GTK_DEPS = true } foreground { s6-echo " [run] SKIP_GOSS_TESTS_GTK_DEPS: '${SKIP_GOSS_TESTS_GTK_DEPS}' ... skipping ..." }
+if -t { s6-test $SKIP_GOSS_TESTS_JHBUILD = true }
+foreground { s6-echo " [run] SKIP_GOSS_TESTS_JHBUILD: '${SKIP_GOSS_TESTS_JHBUILD}' ... skipping ..." }
 exit 0
-
 
 # NOTE: s6-envuidgid program
 # s6-envuidgid potentially sets the UID,
@@ -97,6 +97,8 @@ multisubstitute
   importas XDG_RUNTIME_DIR XDG_RUNTIME_DIR
   importas SIGNAL_BUILD_STOP SIGNAL_BUILD_STOP
   importas TRAVIS_CI TRAVIS_CI
+  importas SKIP_GOSS_TESTS_JHBUILD SKIP_GOSS_TESTS_JHBUILD
+  importas STOP_AFTER_GOSS_GTK_DEPS STOP_AFTER_GOSS_GTK_DEPS
 }
 
 ################################################################################
@@ -141,5 +143,5 @@ foreground { s6-echo " [run] AFTER foreground goss tests" }
 
 # NOTE: if program
 # -t = exit 0 if test fails
-if -t { s6-test $TRAVIS_CI = true } foreground { s6-echo " [run] TRAVIS_CI: '${TRAVIS_CI}' ... sending signal build stop" }
+if -t { s6-test $STOP_AFTER_GOSS_GTK_DEPS = true } foreground { s6-echo " [run] STOP_AFTER_GOSS_GTK_DEPS: '${STOP_AFTER_GOSS_GTK_DEPS}' ... sending signal build stop" }
 exit ${SIGNAL_BUILD_STOP}
