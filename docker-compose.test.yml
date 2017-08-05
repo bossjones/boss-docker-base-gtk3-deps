@@ -11,7 +11,7 @@ services:
         SCARLETT_BUILD_GNOME: 'true'
         TRAVIS_CI: 'true'
         STOP_AFTER_GOSS_GTK_DEPS: 'true'
-        SKIP_GOSS_TESTS_GTK_DEPS: 'false'
+        SKIP_GOSS_TESTS_GTK_DEPS: 'true'
     environment:
       SERVER_LOG_MINIMAL: 1
       SERVER_APP_NAME: base-gtk3-deps
@@ -27,7 +27,7 @@ services:
       SCARLETT_BUILD_GNOME: 'true'
       TRAVIS_CI: 'true'
       STOP_AFTER_GOSS_GTK_DEPS: 'true'
-      SKIP_GOSS_TESTS_GTK_DEPS: 'false'
+      SKIP_GOSS_TESTS_GTK_DEPS: 'true'
     volumes:
     - ./container/root/tests/gtk3_deps.yaml:/gtk3_deps.yaml
     ports:
