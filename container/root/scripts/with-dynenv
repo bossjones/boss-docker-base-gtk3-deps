@@ -11,12 +11,14 @@ DYNENV_UID=$(cat /etc/passwd | grep "^${DYNENV_USER}" | cut -d ":" -f3)
 DYNENV_GID=$(cat /etc/passwd | grep "^${DYNENV_USER}" | cut -d ":" -f4)
 DYNENV_HOME=$(homeof "${DYNENV_USER}")
 
-DYNENV_LOC=/run/user/${DYNENV_UID}/env/*
+test -d /var/run/user/${DYNENV_UID}/env/ && echo "Folder exists: /var/run/user/${DYNENV_UID}/env/" || mkdir -p /var/run/user/${DYNENV_UID}/env/ && sudo chown -R pi:pi /var/run/user/${DYNENV_UID}
+
+DYNENV_LOC=/var/run/user/${DYNENV_UID}/env/*
 
 for f in $DYNENV_LOC; do
   env_variable_name="${f##*/}"
   # FIXME: Remove UID check?
-  if [ "${env_variable_name}" != "UID" ] && [ "${env_variable_name}" != "!" ]; then
+  if [ "${env_variable_name}" != "UID" ] && [ "${env_variable_name}" != "!" ] && [ "${env_variable_name}" != "?" ]; then
     export "${env_variable_name}"="`cat $f`"
   fi
 done

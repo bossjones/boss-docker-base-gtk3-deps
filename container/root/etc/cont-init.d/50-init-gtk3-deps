@@ -18,7 +18,7 @@ foreground { s6-echo " [run] goss base-gtk3-deps tests" }
 with-contenv
 
 # NOTE: Echo status, then dump env program to stdout
-foreground { s6-echo " [run] env before multisubstitute" } s6-env
+foreground { s6-echo " [run] env before multisubstitute" }
 
 # NOTE: s6-envuidgid program
 # s6-envuidgid potentially sets the UID,
@@ -93,6 +93,8 @@ multisubstitute
   importas XDG_RUNTIME_DIR XDG_RUNTIME_DIR
   importas SIGNAL_BUILD_STOP SIGNAL_BUILD_STOP
   importas TRAVIS_CI TRAVIS_CI
+  importas SKIP_GOSS_TESTS_JHBUILD SKIP_GOSS_TESTS_JHBUILD
+  importas STOP_AFTER_GOSS_GTK_DEPS STOP_AFTER_GOSS_GTK_DEPS
 }
 
 ################################################################################
@@ -100,6 +102,11 @@ multisubstitute
 # foreground { s6-echo " [run] AFTER s6-env -i" }
 # foreground { s6-env }
 ################################################################################
+
+# if -t { s6-test $SKIP_GOSS_TESTS_JHBUILD = true }
+# foreground { s6-echo " [run] SKIP_GOSS_TESTS_JHBUILD: '${SKIP_GOSS_TESTS_JHBUILD}' ... skipping ..." }
+# exit 0
+
 
 foreground {
     # NOTE: if program
@@ -113,11 +120,14 @@ foreground {
     if {
         if { s6-echo " [run] lets start these goss tests..." }
         # NOTE: verify that we're the correct user, pi
-        foreground {
-            s6-applyuidgid -u 1000 -g 1000
-            cd /tests
-            /usr/local/bin/goss -g ./goss.gtk3_deps.yaml validate --retry-timeout 30s --sleep 1s
-        }
+        ifelse { s6-test $SKIP_GOSS_TESTS_JHBUILD = false }
+        {
+            foreground {
+                s6-applyuidgid -u 1000 -g 1000
+                cd /tests
+                /usr/local/bin/goss -g ./goss.gtk3_deps.yaml validate --retry-timeout 30s --sleep 1s
+            }
+        } s6-true
         # NOTE: UNCOMMENT THIS LINE IF YOU NEED TO TEST THIS LOGIC WITHOUT RUNNING TESTS # foreground { s6-echo " [run] pretend we just ran s6-applyuidgid -u 1000 -g 1000 /usr/local/bin/goss -g /tests/goss.gtk3_deps.yaml validate --retry-timeout 30s --sleep 1s" }
         # foreground { s6-echo " [run] pretend we just ran s6-applyuidgid -u 1000 -g 1000 /usr/local/bin/goss -g /tests/goss.gtk3_deps.yaml validate --retry-timeout 30s --sleep 1s" }
         # NOTE: importas program
@@ -137,5 +147,5 @@ foreground { s6-echo " [run] AFTER foreground goss tests" }
 
 # NOTE: if program
 # -t = exit 0 if test fails
-if -t { s6-test $TRAVIS_CI = true } foreground { s6-echo " [run] TRAVIS_CI: '${TRAVIS_CI}' ... sending signal build stop" }
+if -t { s6-test $STOP_AFTER_GOSS_GTK_DEPS = true } foreground { s6-echo " [run] STOP_AFTER_GOSS_GTK_DEPS: '${STOP_AFTER_GOSS_GTK_DEPS}' ... sending signal build stop" }
 exit ${SIGNAL_BUILD_STOP}

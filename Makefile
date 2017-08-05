@@ -138,6 +138,8 @@ docker_build_latest:
 	    --build-arg SCARLETT_ENABLE_DBUS='true' \
 	    --build-arg SCARLETT_BUILD_GNOME='true' \
 	    --build-arg TRAVIS_CI='true' \
+		--build-arg STOP_AFTER_GOSS_GTK_DEPS='true' \
+		--build-arg SKIP_GOSS_TESTS_GTK_DEPS='true' \
 		--file=Dockerfile \
 	    --tag bossjones/boss-docker-base-gtk3-deps:$(GIT_SHA) .
 
@@ -151,18 +153,16 @@ docker_build_and_tag:
 	    --build-arg SCARLETT_ENABLE_DBUS='true' \
 	    --build-arg SCARLETT_BUILD_GNOME='true' \
 	    --build-arg TRAVIS_CI='true' \
+		--build-arg STOP_AFTER_GOSS_GTK_DEPS='true' \
+		--build-arg SKIP_GOSS_TESTS_GTK_DEPS='true' \
 		--file=Dockerfile \
 	    --tag bossjones/boss-docker-base-gtk3-deps:$(GIT_SHA) . ; \
 	docker tag bossjones/boss-docker-base-gtk3-deps:$(GIT_SHA) bossjones/boss-docker-base-gtk3-deps:$(TAG) ; \
 	docker tag bossjones/boss-docker-base-gtk3-deps:$(GIT_SHA) bossjones/boss-docker-base-gtk3-deps:latest
 
-docker_build_compile_jhbuild:
-	@docker build \
-	--build-arg SCARLETT_ENABLE_SSHD=0 \
-	--build-arg SCARLETT_ENABLE_DBUS='true' \
-	--build-arg SCARLETT_BUILD_GNOME='true' \
-	--build-arg TRAVIS_CI='true' \
-	-t $(username)/$(container_name)-compile:latest .
+docker_build_and_tag_push: docker_build_and_tag
+	docker push $(username)/$(container_name):$(TAG)
+	docker push $(username)/$(container_name):latest
 
 version: ## Parse version from ./VERSION
 version:

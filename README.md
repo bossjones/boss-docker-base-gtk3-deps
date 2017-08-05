@@ -6,6 +6,10 @@ Docker container that installs a bunch of gtk3 packages in preparation for usage
 Gnome x Jhbuild x PyGObject x Cmusphinx x Gtk+3 in 🐳
 
 [![Build Status](https://travis-ci.org/bossjones/boss-docker-base-gtk3-deps.svg?branch=master)](https://travis-ci.org/bossjones/boss-docker-base-gtk3-deps)
+
+
+[![Build History](https://buildstats.info/travisci/chart/bossjones/boss-docker-base-gtk3-deps?includeBuildsFromPullRequest=true)](https://travis-ci.org/bossjones/boss-docker-base-gtk3-deps?includeBuildsFromPullRequest=true)
+
 [![GitHub release](https://img.shields.io/github/release/bossjones/boss-docker-base-gtk3-deps.svg)]()
 [![Docker Stars](https://img.shields.io/docker/stars/bossjones/boss-docker-base-gtk3-deps.svg)](https://hub.docker.com/r/bossjones/boss-docker-base-gtk3-deps/)
 [![Docker Pulls](https://img.shields.io/docker/pulls/bossjones/boss-docker-base-gtk3-deps.svg)](https://hub.docker.com/r/bossjones/boss-docker-base-gtk3-deps/)
