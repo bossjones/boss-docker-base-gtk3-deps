@@ -533,7 +533,7 @@ RUN \
     echo "os.environ['MAKEFLAGS'] = '-j4 V=1'"            >> /home/pi/.jhbuildrc && \
     echo "os.environ['PREFIX'] = '$USER_HOME/jhbuild'"   >> /home/pi/.jhbuildrc && \
     echo "os.environ['JHBUILD'] = '$USER_HOME/gnome'"    >> /home/pi/.jhbuildrc && \
-    echo "os.environ['PATH'] = '$PREFIX/bin:$PREFIX/sbin:$PATH'" >> /home/pi/.jhbuildrc && \
+    echo "os.environ['PATH'] = '/usr/lib/ccache:$USER_HOME/bin:$PREFIX/bin:$PREFIX/sbin:$PATH'" >> /home/pi/.jhbuildrc && \
     echo "os.environ['LD_LIBRARY_PATH'] = '$PREFIX/lib:$LD_LIBRARY_PATH'" >> /home/pi/.jhbuildrc && \
     echo "os.environ['PYTHONPATH'] = '$PREFIX/lib/python$PYTHON_VERSION/site-packages:/usr/lib/python$PYTHON_VERSION/site-packages'" >> /home/pi/.jhbuildrc && \
     echo "os.environ['PKG_CONFIG_PATH'] = '$PREFIX/lib/pkgconfig:$PREFIX/share/pkgconfig:/usr/lib/pkgconfig'" >> /home/pi/.jhbuildrc && \
@@ -546,6 +546,7 @@ RUN \
     echo "os.environ['VIRTUALENVWRAPPER_VIRTUALENV'] = '$VIRTUALENVWRAPPER_VIRTUALENV'"     >> /home/pi/.jhbuildrc && \
     echo "os.environ['PYTHONSTARTUP'] = '$USER_HOME/.pythonrc'"                              >> /home/pi/.jhbuildrc && \
     echo "os.environ['PIP_DOWNLOAD_CACHE'] = '$USER_HOME/.pip/cache'"                        >> /home/pi/.jhbuildrc && \
+    echo "os.environ['CCACHE_DIR'] = '/ccache'"                        >> /home/pi/.jhbuildrc && \
     cat /home/pi/.jhbuildrc; \
 
     mkdir -p /home/pi/.local/bin \
@@ -562,8 +563,8 @@ RUN \
     && chown pi:pi /usr/local/bin/with-dynenv; \
 
     export CCACHE_DIR=/ccache && \
-    mkdir -p /ccache && \
-    echo "max_size = 5.0G" > /ccache/ccache.conf && \
+    git clone https://github.com/bossjones/jhbuild-ccache /ccache && \
+    ccache -s && \
     chown -R ${UNAME}:${UNAME} /ccache; \
 
     # bash-it stuff
