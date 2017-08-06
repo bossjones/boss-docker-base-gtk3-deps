@@ -564,6 +564,9 @@ RUN \
     && chown pi:pi /usr/local/bin/with-dynenv; \
 
     export CCACHE_DIR=/ccache && \
+    mkdir -p /home/pi/bin && \
+    cd /home/pi/bin && \
+    for cmd in cc gcc c++ g++; do ln -s /usr/bin/ccache $cmd; done && \
     git clone https://github.com/bossjones/jhbuild-ccache /ccache && \
     ccache -s && \
     chown -R ${UNAME}:${UNAME} /ccache; \
