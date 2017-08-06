@@ -550,6 +550,7 @@ RUN \
     cat /home/pi/.jhbuildrc; \
 
     mkdir -p /home/pi/.local/bin \
+    && mkdir -p /home/pi/bin \
     && cp -a /env-setup /home/pi/.local/bin/env-setup \
     && chmod +x /home/pi/.local/bin/env-setup; \
 
