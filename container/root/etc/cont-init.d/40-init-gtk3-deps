@@ -93,7 +93,7 @@ multisubstitute
   importas XDG_RUNTIME_DIR XDG_RUNTIME_DIR
   importas SIGNAL_BUILD_STOP SIGNAL_BUILD_STOP
   importas TRAVIS_CI TRAVIS_CI
-  importas SKIP_GOSS_TESTS_JHBUILD SKIP_GOSS_TESTS_JHBUILD
+  importas SKIP_GOSS_TESTS_GTK_DEPS SKIP_GOSS_TESTS_GTK_DEPS
   importas STOP_AFTER_GOSS_GTK_DEPS STOP_AFTER_GOSS_GTK_DEPS
 }
 
@@ -120,7 +120,7 @@ foreground {
     if {
         if { s6-echo " [run] lets start these goss tests..." }
         # NOTE: verify that we're the correct user, pi
-        ifelse { s6-test $SKIP_GOSS_TESTS_JHBUILD = false }
+        ifelse { s6-test $SKIP_GOSS_TESTS_GTK_DEPS = false }
         {
             foreground {
                 s6-applyuidgid -u 1000 -g 1000
