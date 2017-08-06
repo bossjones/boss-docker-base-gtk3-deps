@@ -73,8 +73,8 @@ ENV JHBUILD "${USER_HOME}/gnome"
 # /home/pi/.virtualenvs
 ENV PATH_TO_DOT_VIRTUALENV "${USER_HOME}/.virtualenvs"
 
-# /home/pi/jhbuild/bin:/home/pi/jhbuild/sbin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-ENV PATH ${PREFIX}/bin:${PREFIX}/sbin:${PATH}
+# /usr/lib/ccache:/home/pi/bin:/home/pi/jhbuild/bin:/home/pi/jhbuild/sbin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ENV PATH /usr/lib/ccache:${USER_HOME}/bin:${PREFIX}/bin:${PREFIX}/sbin:${PATH}
 
 # /home/pi/.virtualenvs/scarlett_os/lib
 ENV LD_LIBRARY_PATH ${PREFIX}/lib:${LD_LIBRARY_PATH}
