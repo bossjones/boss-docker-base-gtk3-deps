@@ -1,0 +1,93 @@
+#!/usr/bin/execlineb -P
+
+# Import defaults from linked container.
+with-contenv
+
+foreground { s6-echo " [run] multisubstitute for HOME and XDG_RUNTIME_DIR" }
+
+# Set the bare minimum env vars
+s6-envuidgid pi
+multisubstitute {
+  importas HOME HOME
+  importas XDG_RUNTIME_DIR XDG_RUNTIME_DIR
+  importas UID UID
+  importas GID GID
+  importas PATH PATH
+  importas ENABLE_PYTHON3 ENABLE_PYTHON3
+  importas ENABLE_GTK ENABLE_GTK
+  importas PREFIX PREFIX
+  importas JHBUILD JHBUILD
+  importas LD_LIBRARY_PATH LD_LIBRARY_PATH
+  importas PYTHONPATH PYTHONPATH
+}
+
+# Proof that the values are correct
+foreground { s6-echo " [run] TEST_PATH is ${TEST_PATH}" }
+foreground { s6-echo " [run] HOME is ${HOME}" }
+foreground { s6-echo " [run] XDG_RUNTIME_DIR is ${XDG_RUNTIME_DIR}" }
+foreground { s6-echo " [run] PATH is ${PATH}" }
+
+# Set uid to 1000 now
+multisubstitute {
+    import -D "1000" UID
+    import -D "1000" GID
+}
+
+# NOTE: s6-env -i program
+# -i Invoke utility with exactly the environment specified by the arguments;
+# the inherited environment shall be ignored completely.
+foreground {
+    s6-env -i
+    UID=$UID
+    GID=$GID
+    XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR
+    s6-dumpenv -- /var/run/s6/container_environment
+}
+
+foreground { s6-echo " [run] AFTER s6-env -i" }
+
+foreground {
+    s6-echo " [run] s6-envuidgid root mkdir -p ${XDG_RUNTIME_DIR}/env"
+}
+
+# mkdir -p /var/run/user/1000/env
+foreground {
+    s6-envuidgid root mkdir -p ${XDG_RUNTIME_DIR}/env
+}
+
+foreground {
+    s6-echo " [run] s6-envuidgid pi s6-chown -U ${XDG_RUNTIME_DIR}"
+}
+
+# s6-envuidgid pi s6-chown -U /var/run/user/1000
+foreground {
+    s6-envuidgid pi s6-chown -U ${XDG_RUNTIME_DIR}
+}
+
+foreground {
+    s6-echo " [run] s6-envuidgid pi s6-chown -U ${XDG_RUNTIME_DIR}/env"
+}
+
+# s6-envuidgid pi s6-chown -U /var/run/user/1000/env
+foreground {
+    s6-envuidgid pi s6-chown -U ${XDG_RUNTIME_DIR}/env
+}
+
+foreground {
+    s6-echo " [run] s6-applyuidgid -u 1000 -g 1000 umask 022 s6-dumpenv -- ${XDG_RUNTIME_DIR}/env"
+}
+
+# Write env vars to file
+# s6-applyuidgid -u 1000 -g 1000 umask 022 s6-dumpenv -- /var/run/user/1000/env
+foreground {
+    s6-applyuidgid -u 1000 -g 1000 umask 022 s6-dumpenv -- ${XDG_RUNTIME_DIR}/env
+}
+
+foreground {
+    s6-echo " [run] s6-applyuidgid -u 1000 -g 1000 umask 022 ${HOME}/.local/bin/env-setup"
+}
+
+# write env vars to /var/run/user/1000/env
+foreground {
+    s6-applyuidgid -u 1000 -g 1000 umask 022 ${HOME}/.local/bin/env-setup
+}
