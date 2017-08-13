@@ -559,9 +559,9 @@ RUN \
     && chmod +x /home/pi/.local/bin/compile_jhbuild_and_deps.sh \
     && chown pi:pi /home/pi/.local/bin/compile_jhbuild_and_deps.sh; \
 
-    cp -a /scripts/with-dynenv /usr/local/bin/with-dynenv \
-    && chmod +x /usr/local/bin/with-dynenv \
-    && chown pi:pi /usr/local/bin/with-dynenv; \
+    cp -a /scripts/with-dynenv /usr/bin/with-dynenv \
+    && chmod +x /usr/bin/with-dynenv \
+    && chown pi:pi /usr/bin/with-dynenv; \
 
     export CCACHE_DIR=/ccache && \
     mkdir -p /home/pi/bin && \
